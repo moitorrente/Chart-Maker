@@ -12,8 +12,16 @@
 <body>
 	<input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv">
 	<output id="list"></output>
-	<canvas style="display:none" id="myChart" width="1000" height="800" ></canvas>
+	<select name="chart" id="chartList" style="display:none">Datos a mostrar</select>
+	<div>
+		<input type="button" value="Añadir eje izquierdo" id="rightChartButton" style="display:none"
+			onclick="processChart(chartList.value, 'left')">
+		<input type="button" value="Añadir eje derecho" id="leftChartButton" style="display:none"
+			onclick="processChart(chartList.value, 'right')">
+		<input type="button" value="Limpiar graficos" id="resetButton" style="display:none" onclick="resetChart()">
+	</div>
+	<canvas style="display:none" id="myChart" width="1000" height="800"></canvas>
 </body>
 <script src="script.js"></script>
-<script src="chart.js"></script>
+
 </html>

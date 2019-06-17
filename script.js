@@ -1,16 +1,21 @@
 var header = [];
 var rawData = [];
 var timestamp = [];
-var weight = [];
-var height = [];
-var bmi = [];
-var fatRate = [];
-var bodyWaterRate = [];
-var boneMass = [];
-var metabolism = [];
-var muscleRate = [];
-var visceralFat = [];
-var impedance = [];
+//var dataSets = [];
+
+var dataSets = {
+	names: [],
+	values: []
+}
+
+var colorArray = [
+	'rgba(255, 99, 132, 1)',
+	'rgba(54, 162, 235, 1)',
+	'rgba(255, 206, 86, 1)',
+	'rgba(75, 192, 192, 1)',
+	'rgba(153, 102, 255, 1)',
+	'rgba(255, 159, 64, 1)'];
+
 var ctx = document.getElementById('myChart').getContext('2d');
 
 var data = {
@@ -38,10 +43,10 @@ var myChart = new Chart(ctx, {
 			yAxes: [{
 				id: 'right',
 				position: 'right',
-				display: true,
+				display: false,
 				scaleLabel: {
 					display: true,
-					labelString: 'bmi'
+					labelString: ''
 				},
 				ticks: {
 					beginAtZero: false,
@@ -49,10 +54,10 @@ var myChart = new Chart(ctx, {
 			}, {
 				id: 'left',
 				position: 'left',
-				display: true,
+				display: false,
 				scaleLabel: {
 					display: true,
-					labelString: 'weigth'
+					labelString: ''
 				},
 				ticks: {
 					beginAtZero: false
@@ -90,16 +95,44 @@ function getAsText(fileToRead) {
 function loadHandler(event) {
 	var csv = event.target.result;
 	processData(csv);
-	addChart(weight, 1, 'right');
-	addChart(muscleRate, 8, 'left');
+	loadOptions();
 }
 
+function loadOptions() {
+	let dropdown = document.getElementById("chartList");
+	let rightChartButton = document.getElementById("rightChartButton");
+
+	let leftChartButton = document.getElementById("leftChartButton");
+	let resetButton = document.getElementById("resetButton");
+
+	for (let i = 0; i < header.length; i++) {
+		let option = document.createElement("option");
+		option.text = header[i];
+		option.value = i;
+		dropdown.options.add(option);
+
+	}
+	dropdown.options[0].style.display = 'none';	//Se oculta el timestamp
+	dropdown.selectedIndex = 1; //Se selecciona la siguiente posicion por defecto
+	dropdown.style.display = 'flex';
+	rightChartButton.style.display = 'inline';
+	leftChartButton.style.display = 'inline';
+	resetButton.style.display = 'inline';
+}
+
+function resetChart() {
+	while (data.datasets.length) {
+		data.datasets.shift();
+	}
+	myChart.update();
+	document.getElementById('myChart').style.display = 'none';
+}
 
 function processData(csv) {
 	var allTextLines = csv.split(/\r\n|\n/);
 
 	header = allTextLines.shift().split(",");
-	while (allTextLines.length > 0) {
+	while (allTextLines.length) {
 		rawData.push(allTextLines.shift().split(","));
 	}
 
@@ -109,45 +142,44 @@ function processData(csv) {
 		timestamp[i] = convertUnixTimestamp(timestamp[i]);
 	}
 
-	weight = extractValue2dArray(rawData, 1);
-	height = extractValue2dArray(rawData, 2);
-	bmi = extractValue2dArray(rawData, 3);
-	fatRate = extractValue2dArray(rawData, 4);
-	bodyWaterRate = extractValue2dArray(rawData, 5);
-	boneMass = extractValue2dArray(rawData, 6);
-	metabolism = extractValue2dArray(rawData, 7);
-	muscleRate = extractValue2dArray(rawData, 8);
-	visceralFat = extractValue2dArray(rawData, 9);
-	impedance = extractValue2dArray(rawData, 10);
+	dataSets.names = header;
+	dataSets.values[0] = timestamp;
+	for (let i = 1; i < header.length; i++) {
+		dataSets.values.push(extractValue2dArray(rawData, i));
+	}
 }
 
-function addChart(dataToDisplay, headerIndex, position) {
-	data.labels = timestamp;
-	data.datasets.push(generateDatasets(dataToDisplay, header[headerIndex], position));
-	myChart.update();
-	document.getElementById('myChart').style.display = 'flex';
-}
-
-
-function generateDatasets(dataArray, label, position) {
-	let index;
-	if (position == 'right'){
-		index = 0;
+function processChart(index, position) {
+	let pos;
+	if (position == 'left') {
+		pos = 1;
 	} else {
+		pos = 0;
+	}
+	myChart.options.scales.yAxes[pos].display = true;
+	addChart(dataSets.values[index], dataSets.names[index], position);
+}
+
+
+function addChart(dataToDisplay, label, position) {
+	data.labels = timestamp;
+	data.datasets.push(generateChartDataset(dataToDisplay, label, position));
+	myChart.update();
+	document.getElementById('myChart').style.display = 'inline';
+}
+
+function generateChartDataset(dataArray, label, position) {
+	let index;
+	if (position == 'left') {
 		index = 1;
+	} else {
+		index = 0;
 	}
 	var newDataset = {
 		label: label,
 		yAxisID: position,
 		data: dataArray,
-		borderColor: [
-			'rgba(255, 99, 132, 1)',
-			'rgba(54, 162, 235, 1)',
-			'rgba(255, 206, 86, 1)',
-			'rgba(75, 192, 192, 1)',
-			'rgba(153, 102, 255, 1)',
-			'rgba(255, 159, 64, 1)'
-		],
+		borderColor: colorArray[index],
 		borderWidth: 1,
 	}
 	myChart.options.scales.yAxes[index].scaleLabel.labelString = label;
