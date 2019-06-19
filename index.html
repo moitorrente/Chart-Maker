@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html>
 
 <head>
+	<meta charset="UTF-8">
 	<title>Generador de graficas</title>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
@@ -14,6 +16,7 @@
 	<output id="list"></output>
 	<select name="chart" id="chartList" style="display:none">Datos a mostrar</select>
 	<div>
+		<input type="checkbox" name="interpolate" id="interpolar">Interpolar</input>
 		<input type="button" value="Añadir eje izquierdo" id="rightChartButton" style="display:none"
 			onclick="processChart(chartList.value, 'left')">
 		<input type="button" value="Añadir eje derecho" id="leftChartButton" style="display:none"
@@ -23,5 +26,4 @@
 	<canvas style="display:none" id="myChart" width="1000" height="800"></canvas>
 </body>
 <script src="script.js"></script>
-
-</html>
+<script src="interpolation.js"></script>
