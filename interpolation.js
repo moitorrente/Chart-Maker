@@ -11,20 +11,32 @@ function interpolate(array) {
         let nextDataIndex = searchNext(array, noMeasureIndexes[i]);
         interpolatedArray[noMeasureIndexes[i]] = interpolatedValue(array, noMeasureIndexes[i], previousDataIndex, nextDataIndex);
     }
+
+    //Correccion para inicio y fin de array sin valor
+    for (let i = 0; i < interpolatedArray.length; i++) {
+        if (isNaN(interpolatedArray[i])) {
+            if (interpolatedArray[i + 1] == undefined) {
+                interpolatedArray[i] = interpolatedArray[i - 1];
+            } else {
+                interpolatedArray[i] = interpolatedArray[i + 1];
+            }
+        }
+    }
     return interpolatedArray;
 }
 
 function searchNull(array) {
-    let zeroArray = [];
+    let nullArray = [];
     for (let i = 0; i < array.length; i++) {
         if (array[i] == null) {
-            zeroArray.push(i);
+            nullArray.push(i);
         }
     }
-    return zeroArray;
+    return nullArray;
 }
 
 function searchPrevious(array, index) {
+
     for (let i = index; i >= 0; i--) {
         if (array[i] != null) {
             return i;

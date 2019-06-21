@@ -14,16 +14,27 @@
 <body>
 	<input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv">
 	<output id="list"></output>
-	<select name="chart" id="chartList" style="display:none">Datos a mostrar</select>
-	<div>
-		<input type="checkbox" name="interpolate" id="interpolar">Interpolar</input>
-		<input type="button" value="Añadir eje izquierdo" id="rightChartButton" style="display:none"
-			onclick="processChart(chartList.value, 'left')">
-		<input type="button" value="Añadir eje derecho" id="leftChartButton" style="display:none"
-			onclick="processChart(chartList.value, 'right')">
-		<input type="button" value="Limpiar graficos" id="resetButton" style="display:none" onclick="resetChart()">
+
+	<div id="optionPanel" style="display:none">
+		<p>Datos a mostrar: </p>
+		<select name="chart" id="chartList" >Datos a mostrar</select>
+		<br>
+		<input type="radio" name="visualOptions" id="visualOptions" value="data">Solo datos</input>
+		<br>
+		<input type="radio" name="visualOptions" id="visualOptions" value="interpolation">Datos interpolados</input>
+		<br>
+		<input type="radio" name="visualOptions" id="visualOptions" value="regression">Datos interpolados con regresión lineal</input>
+		<input type="button" value="Añadir en eje izquierdo" id="rightChartButton" 
+			onclick="processChart(chartList.value, 'left', 1)">
+		<input type="button" value="Añadir en eje derecho" id="leftChartButton"
+			onclick="processChart(chartList.value, 'right', 0)">
+		<input type="button" value="Limpiar graficos" id="resetButton"  onclick="resetChart()">
 	</div>
-	<canvas style="display:none" id="myChart" width="1000" height="800"></canvas>
+	<canvas style="display:none" id="myChart" width="1000" height="700"></canvas>
 </body>
 <script src="script.js"></script>
+<script src="fileHandler.js"></script>
+<script src="optionsHandler.js"></script>
+<script src="dataProcessing.js"></script>
 <script src="interpolation.js"></script>
+<script src="linearRegression.js"></script>
