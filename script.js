@@ -1,8 +1,6 @@
 var header = [];
 var rawData = [];
 var timestamp = [];
-var interpolated = [];
-//var dataSets = [];
 
 var dataSets = {
 	names: [],
@@ -90,10 +88,6 @@ function processChart(index, position, colorIndex) {
 	}
 	myChart.options.scales.yAxes[pos].display = true;
 
-	for (let i = 0; i < interpolated.length; i++) {
-		interpolated[i] = false;
-	}
-
 	let visualOptions = document.getElementsByName('visualOptions');
 	let display = '';
 	for (let i = 0; i < visualOptions.length; i++) {
@@ -102,29 +96,30 @@ function processChart(index, position, colorIndex) {
 			break;
 		}
 	}
-	//	console.log(visualOptions);
 
 	if (display == 'data') {
 		addChart(dataSets.values[index], dataSets.names[index], position, colorIndex);
 	} else if (display == 'interpolation') {
 		let interpolatedArray = interpolate(dataSets.values[index]);
-		addChart(interpolatedArray, dataSets.names[index], position, colorIndex);
+		addChart(interpolatedArray.values, dataSets.names[index], position, colorIndex, interpolatedArray.colors);
 	} else if (display == 'regression') {
 		let interpolatedArray = interpolate(dataSets.values[index]);
-		let regresion = linearRegression(dataSets.values[0], interpolatedArray);
-		addChart(interpolatedArray, dataSets.names[index], position, colorIndex);
-		addChart(regresion, 'Regresión ' + dataSets.names[index], position, 5);
+		let regression = linearRegression(dataSets.values[0], interpolatedArray.values);
+		addChart(interpolatedArray.values, dataSets.names[index], position, colorIndex, interpolatedArray.colors);
+		addChart(regression.values, 'Regresión ' + dataSets.names[index], position, 5);
+		//console.log("y(t) = " + regression.slope + "t + " + regression.intersection);
 	}
 }
 
-function addChart(dataToDisplay, label, position, colorIndex) {
+function addChart(dataToDisplay, label, position, colorIndex, pointBackgroundColor) {
 	data.labels = timestamp;
-	data.datasets.push(generateChartDataset(dataToDisplay, label, position, colorIndex));
+	let newDataset = generateChartDataset(dataToDisplay, label, position, colorIndex, pointBackgroundColor);
+	data.datasets.push(newDataset);
 	myChart.update();
 	document.getElementById('myChart').style.display = 'inline';
 }
 
-function generateChartDataset(dataArray, label, position, colorIndex) {
+function generateChartDataset(dataArray, label, position, colorIndex, pointBackgroundColor) {
 	let index;
 	if (position == 'left') {
 		index = 1;
@@ -138,9 +133,35 @@ function generateChartDataset(dataArray, label, position, colorIndex) {
 		data: dataArray,
 		borderColor: colorArray[colorIndex],
 		borderWidth: 1,
-		pointBackgroundColor: interpolated,
+		pointBackgroundColor: pointBackgroundColor,
 	}
 	myChart.options.scales.yAxes[index].scaleLabel.labelString = label;
 	return newDataset;
+}
+
+function calculateStatistics(index){
+	let array = cleanArray(dataSets.values[index]);
+	let meanValue = mean(array);
+	let medianValue = median(array);
+	let modeValue = mode(array);
+	let rangeValues = range(array);
+	let samplesNumberValue = samplesNumber(array);
+	let lossSamplesValue = lossSamplesNumber(array);
+
+	let meanText = document.getElementById("meanText");
+	let medianText = document.getElementById("medianText");
+	let modeText = document.getElementById("modeText");
+	let minText = document.getElementById("minText");
+	let maxText = document.getElementById("maxText");
+	let samplesText = document.getElementById("samplesText");
+	let lossSamplesText = document.getElementById("lossSamplesText");
+
+	meanText.value = meanValue;
+	medianText.value = medianValue;
+	modeText.value = modeValue;
+	minText.value = rangeValues[0];
+	maxText.value = rangeValues[1];
+	samplesText.value = samplesNumberValue;
+	lossSamplesText.value = lossSamplesValue;
 }
 

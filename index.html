@@ -8,6 +8,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es-do.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 
@@ -17,21 +18,56 @@
 
 	<div id="optionPanel" style="display:none">
 		<p>Datos a mostrar: </p>
-		<select name="chart" id="chartList" >Datos a mostrar</select>
+		<select name="chart" id="chartList">Datos a mostrar</select>
 		<br>
 		<input type="radio" name="visualOptions" id="visualOptions" value="data">Solo datos</input>
 		<br>
 		<input type="radio" name="visualOptions" id="visualOptions" value="interpolation">Datos interpolados</input>
 		<br>
-		<input type="radio" name="visualOptions" id="visualOptions" value="regression">Datos interpolados con regresión lineal</input>
-		<input type="button" value="Añadir en eje izquierdo" id="rightChartButton" 
+		<input type="radio" name="visualOptions" id="visualOptions" value="regression">Datos interpolados + regresión
+		lineal</input>
+		<input type="button" value="Añadir en eje izquierdo" id="rightChartButton"
 			onclick="processChart(chartList.value, 'left', 1)">
 		<input type="button" value="Añadir en eje derecho" id="leftChartButton"
 			onclick="processChart(chartList.value, 'right', 0)">
-		<input type="button" value="Limpiar graficos" id="resetButton"  onclick="resetChart()">
+		<input type="button" value="Limpiar graficos" id="resetButton" onclick="resetChart()">
+	</div>
+	<br>
+	<br>
+	<div id="statisticsPanel" style="display:none">
+		<div class="block">
+			<label>Media</label>
+			<input type="text" id="meanText" disabled>
+		</div>
+		<div class="block">
+			<label>Mediana</label>
+			<input type="text" id="medianText" disabled>
+		</div>
+		<div class="block">
+			<label>Moda</label>
+			<input type="text" id="modeText" disabled>
+		</div>
+		<div class="block">
+			<label>Valor mínimo</label>
+			<input type="text" id="minText" disabled>
+		</div>
+		<div class="block">
+			<label>Valor máximo</label>
+			<input type="text" id="maxText" disabled>
+		</div>
+		<div class="block">
+			<label>Número de muestras</label>
+			<input type="text" id="samplesText" disabled>
+		</div>
+		<div class="block">
+			<label>Número de muestras perdidas</label>
+			<input type="text" id="lossSamplesText" disabled>
+		</div>
+		<input type="button" value="Calcular estadísticas" onclick="calculateStatistics(chartList.value)">
 	</div>
 	<canvas style="display:none" id="myChart" width="1000" height="700"></canvas>
 </body>
+<script src="statistics.js"></script>
 <script src="script.js"></script>
 <script src="fileHandler.js"></script>
 <script src="optionsHandler.js"></script>

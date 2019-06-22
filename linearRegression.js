@@ -1,6 +1,4 @@
 function linearRegression(xArray, yArray) {
-    let xClean = cleanArray(xArray);
-    let yClean = cleanArray(yArray);
     let xSum = 0;
     let ySum = 0;
     let xySum = 0;
@@ -10,16 +8,22 @@ function linearRegression(xArray, yArray) {
     let y = 0;
     let resultY = [];
 
-    if (xClean.length != yClean.length) {
+    let regressionObject = {
+        slope: 0,
+        intersection: 0,
+        values: []
+    };
+
+    if (xArray.length != yArray.length) {
         alert('Los dos arrays de datos deben tener la misma longitud');
         return;
     } else {
-        samples = xClean.length;
+        samples = xArray.length;
     }
  
-    for (let i = 0; i < xClean.length; i++) {
-        x = xClean[i];
-        y = yClean[i];
+    for (let i = 0; i < xArray.length; i++) {
+        x = xArray[i];
+        y = yArray[i];
         xSum += x;
         ySum += y;
         xxSum += x * x;
@@ -29,21 +33,14 @@ function linearRegression(xArray, yArray) {
     let m = (samples * xySum - xSum * ySum) / (samples * xxSum - xSum * xSum);
     let b = (ySum / samples) - (m * xSum) / samples;
 
-    for (let i = 0; i < xClean.length; i++) {
-        x = xClean[i];
+    for (let i = 0; i < xArray.length; i++) {
+        x = xArray[i];
         y = x * m + b;
         y = parseFloat(y.toFixed(2));
         resultY.push(y);
     }
-    return resultY;
-}
-
-function cleanArray(array) {
-    let cleanArray = [];
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] != null) {
-            cleanArray.push(parseFloat(array[i]));
-        }
-    }
-    return cleanArray;
+    regressionObject.values = resultY;
+    regressionObject.slope = m;
+    regressionObject.intersection = b;
+    return regressionObject;
 }

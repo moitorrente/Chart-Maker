@@ -23,7 +23,7 @@ function extractValue2dArray(array, index) {
 	let dataArray = [];
 	for (let i = 0; i < array.length; i++) {
 		if (array[i][index] > 0) {
-			dataArray[i] = array[i][index];
+			dataArray[i] = parseFloat(array[i][index]);
 		} else {
 			dataArray[i] = null;
 		}
@@ -33,4 +33,14 @@ function extractValue2dArray(array, index) {
 
 function convertUnixTimestamp(unixTimestamp) {
 	return moment.unix(unixTimestamp).format();
+}
+
+function cleanArray(array) {
+    let cleanArray = [];
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] != null) {
+            cleanArray.push(parseFloat(array[i]));
+        }
+    }
+    return cleanArray;
 }

@@ -1,15 +1,21 @@
+
+
 function interpolate(array) {
     let interpolatedArray = Array.from(array);
     let noMeasureIndexes = searchNull(array);
+    let interpolatedColor = [];
 
-    for (let i = 0; i < array.length; i++) {
-        interpolated.push(false);
+    let interpolation = {
+        values: [],
+        colors: []
     }
+
+    interpolatedColor.length = 0;
 
     for (let i = 0; i < noMeasureIndexes.length; i++) {
         let previousDataIndex = searchPrevious(array, noMeasureIndexes[i]);
         let nextDataIndex = searchNext(array, noMeasureIndexes[i]);
-        interpolatedArray[noMeasureIndexes[i]] = interpolatedValue(array, noMeasureIndexes[i], previousDataIndex, nextDataIndex);
+        interpolatedArray[noMeasureIndexes[i]] = interpolatedValue(array, noMeasureIndexes[i], previousDataIndex, nextDataIndex,interpolatedColor);
     }
 
     //Correccion para inicio y fin de array sin valor
@@ -22,7 +28,9 @@ function interpolate(array) {
             }
         }
     }
-    return interpolatedArray;
+    interpolation.values = interpolatedArray;
+    interpolation.colors = interpolatedColor;
+    return interpolation;
 }
 
 function searchNull(array) {
@@ -52,7 +60,7 @@ function searchNext(array, index) {
     }
 }
 
-function interpolatedValue(array, index, previousIndex, nextIndex) {
+function interpolatedValue(array, index, previousIndex, nextIndex, interpolatedColor) {
     let tempTimestamp = dataSets.values[0];
     let firstPonderation = tempTimestamp[nextIndex] - tempTimestamp[index];
     let secondPonderation = tempTimestamp[index] - tempTimestamp[previousIndex];
@@ -60,8 +68,8 @@ function interpolatedValue(array, index, previousIndex, nextIndex) {
     let firstValue = parseFloat(array[previousIndex]);
     let secondValue = parseFloat(array[nextIndex]);
     let interpolation = (firstValue * firstPonderation + secondValue * secondPonderation) / divisor;
-    interpolation = interpolation.toFixed(2);
-    interpolated[index] = 'red';
+    interpolation = parseFloat(interpolation.toFixed(2));
+    interpolatedColor[index] = 'red';
     return interpolation;
 }
 
