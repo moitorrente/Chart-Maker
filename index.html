@@ -4,68 +4,103 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Generador de graficas</title>
-
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es-do.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
-
 </head>
 
 <body>
-	<input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv">
-	<output id="list"></output>
+	<div class="grid-container">
+		<div class="header-container">
+			<h1>Generador de gráficas</h1>
+		</div>
+		<div class="file-container">
+			<input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv">
+			<output id="list"></output>
+		</div>
+		<div id="optionPanel" class="options-container" style="display:none">
 
-	<div id="optionPanel" style="display:none">
-		<p>Datos a mostrar: </p>
-		<select name="chart" id="chartList">Datos a mostrar</select>
-		<br>
-		<input type="radio" name="visualOptions" id="visualOptions" value="data">Solo datos</input>
-		<br>
-		<input type="radio" name="visualOptions" id="visualOptions" value="interpolation">Datos interpolados</input>
-		<br>
-		<input type="radio" name="visualOptions" id="visualOptions" value="regression">Datos interpolados + regresión
-		lineal</input>
-		<input type="button" value="Añadir en eje izquierdo" id="rightChartButton"
-			onclick="processChart(chartList.value, 'left', 1)">
-		<input type="button" value="Añadir en eje derecho" id="leftChartButton"
-			onclick="processChart(chartList.value, 'right', 0)">
-		<input type="button" value="Limpiar graficos" id="resetButton" onclick="resetChart()">
+			<div class="radiobuttons-container">
+				<h2>Opciones</h2>
+				<select name="chart" id="chartList" class="list">Datos a mostrar</select>
+				<div>
+					<input type="radio" name="visualOptions" id="visualOptions" value="data">Solo datos</input>
+				</div>
+				<div>
+					<input type="radio" name="visualOptions" id="visualOptions" value="interpolation">Datos
+					interpolados</input>
+				</div>
+				<div>
+					<input type="radio" name="visualOptions" id="visualOptions" value="regression">Datos
+					interpolados + regresión lineal</input>
+				</div>
+				<div>
+					<div>
+						<label>Fecha inicial</label>
+						<input type="date" name="initialDate" id="initialDate">
+					</div>
+					<div>
+						<label>Fecha final</label>
+						<input type="date" name="finalDate" id="finalDate">
+					</div>
+				</div>
+				<div class="button-center-wraper">
+					<input type="button" value="Añadir en eje izquierdo" id="rightChartButton"
+						onclick="processChart(chartList.value, 'left', 1)" class="button-right">
+					<input type="button" value="Añadir en eje derecho" id="leftChartButton"
+						onclick="processChart(chartList.value, 'right', 0)" class="button-left">
+				</div>
+				<div class="button-center-wraper">
+					<input type="button" value="Limpiar graficos" id="resetButton" onclick="resetChart()"
+						class="button-center">
+				</div>
+			</div>
+		</div>
+		<div id="statisticsPanel" class="statistics-container" style="display: none">
+			<div class="parm1-container">
+				<input type="text" id="meanText" disabled>
+				<label>Media</label>
+			</div>
+			<div class="parm2-container">
+				<input type="text" id="medianText" disabled>
+				<label>Mediana</label>
+			</div>
+			<div class="parm3-container">
+				<input type="text" id="modeText" disabled>
+				<label>Moda</label>
+			</div>
+			<div class="parm4-container">
+				<input type="text" id="minText" disabled>
+				<label>Valor mínimo</label>
+			</div>
+			<div class="parm5-container">
+				<input type="text" id="maxText" disabled>
+				<label>Valor máximo</label>
+			</div>
+			<div class="parm6-container">
+				<input type="text" id="samplesText" disabled>
+				<label>Número de muestras</label>
+			</div>
+			<div class="parm7-container">
+				<input type="text" id="lossSamplesText" disabled>
+				<label>Número de muestras perdidas</label>
+			</div>
+			<div class="parm8-container">
+				<input type="text" id="lossSamplesText" disabled>
+				<label>Número de muestras perdidas</label>
+			</div>
+			<div class="statistics-btn-container">
+
+				<input type="button" value="Calcular estadísticas" onclick="calculateStatistics(chartList.value)"
+					class="button-center">
+			</div>
+		</div>
+
+		<div class="chart-container">
+			<canvas style="display:none" id="myChart" width="1000" height="700"></canvas>
+		</div>
 	</div>
-	<br>
-	<br>
-	<div id="statisticsPanel" style="display:none">
-		<div class="block">
-			<label>Media</label>
-			<input type="text" id="meanText" disabled>
-		</div>
-		<div class="block">
-			<label>Mediana</label>
-			<input type="text" id="medianText" disabled>
-		</div>
-		<div class="block">
-			<label>Moda</label>
-			<input type="text" id="modeText" disabled>
-		</div>
-		<div class="block">
-			<label>Valor mínimo</label>
-			<input type="text" id="minText" disabled>
-		</div>
-		<div class="block">
-			<label>Valor máximo</label>
-			<input type="text" id="maxText" disabled>
-		</div>
-		<div class="block">
-			<label>Número de muestras</label>
-			<input type="text" id="samplesText" disabled>
-		</div>
-		<div class="block">
-			<label>Número de muestras perdidas</label>
-			<input type="text" id="lossSamplesText" disabled>
-		</div>
-		<input type="button" value="Calcular estadísticas" onclick="calculateStatistics(chartList.value)">
-	</div>
-	<canvas style="display:none" id="myChart" width="1000" height="700"></canvas>
 </body>
 <script src="statistics.js"></script>
 <script src="script.js"></script>

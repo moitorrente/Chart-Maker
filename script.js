@@ -37,7 +37,8 @@ var myChart = new Chart(ctx, {
 					beginAtZero: false,
 				},
 				bounds: 'data',
-				distribution: 'linear'
+				distribution: 'linear',
+				//,gridLines: { color: "#fff" }
 			}],
 			yAxes: [{
 				id: 'right',
@@ -49,7 +50,8 @@ var myChart = new Chart(ctx, {
 				},
 				ticks: {
 					beginAtZero: false,
-				}
+				},
+				//gridLines: { color: "#fff" }
 			}, {
 				id: 'left',
 				position: 'left',
@@ -60,7 +62,8 @@ var myChart = new Chart(ctx, {
 				},
 				ticks: {
 					beginAtZero: false
-				}
+				},
+				//,gridLines: { color: "#fff" }
 			}
 			]
 		}

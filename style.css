@@ -1,6 +1,161 @@
-.block label { 
-    display: inline-block; 
-    width: 200px; 
-    text-align: right; 
-    padding: 3px
+ @import 'https://fonts.googleapis.com/css?family=Roboto:100,300';
+
+ body{
+  font-family: 'roboto';
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: black;
+  color: white;
+ }
+
+ .grid-container {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr 1fr 1fr;
+  grid-template-rows: 0.2fr 0.6fr 1fr 1.7fr;
+  grid-template-areas: "header-container header-container header-container header-container" "file-container chart-container chart-container chart-container" "options-container chart-container chart-container chart-container" "statistics-container chart-container chart-container chart-container";
 }
+
+.header-container { 
+  grid-area: header-container; 
+  text-align: center;
+}
+
+.file-container { 
+  grid-area: file-container; 
+  margin: 10px;
+  background: #1E1E1E;
+}
+
+.options-container { 
+  display: block;
+  grid-area: options-container; 
+  margin: 10px;
+  background: #1E1E1E;
+}
+
+
+.statistics-container {
+  display: block;
+  grid-template-columns: 0.9fr 1fr;
+  grid-template-rows: 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr;
+  grid-template-areas: "parm1-container parm2-container" "parm3-container parm4-container" "parm5-container parm6-container" "parm7-container parm8-container" "statistics-btn-container statistics-btn-container";
+  grid-area: statistics-container;
+  text-align: center;
+  float: center;
+  margin: 10px;
+  background: #1E1E1E;
+}
+
+.statistics-container input{
+  border: none;
+  text-align: center;
+  width: 80px;
+  border-radius: 50px;
+  background: none;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.statistics-container label{
+  text-align: center;
+  justify-content: center;
+  display: block;
+  font-size: 13px;
+}
+
+.statistics-btn-container { 
+  grid-area: statistics-btn-container; 
+  text-align: center;
+}
+
+.parm1-container { 
+  grid-area: parm1-container; 
+  padding: 15px;
+}
+
+.parm2-container { 
+  grid-area: parm2-container; 
+  padding: 15px;
+}
+
+.parm3-container { 
+  grid-area: parm3-container; 
+  padding: 15px;
+}
+
+.parm4-container { 
+  grid-area: parm4-container; 
+  padding: 15px;
+}
+
+.parm5-container { 
+  grid-area: parm5-container; 
+  padding: 15px;
+}
+
+.parm6-container { 
+  grid-area: parm6-container; 
+  padding: 15px;
+}
+
+.parm7-container { 
+  grid-area: parm7-container; 
+  padding: 15px;
+}
+
+.parm8-container { 
+  grid-area: parm8-container; 
+  padding: 15px;
+}
+
+.chart-container { 
+  grid-area: chart-container; 
+  background: white;
+  text-align: center;
+}
+
+
+input.button-right {
+  color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgba(54, 162, 235, 1);
+  border-radius: 3px;
+  width: max-content;
+  display: inline-block;
+}
+
+input.button-right:hover {
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgba(54, 162, 235, 1) 0 0px 0px 40px inset;
+}
+
+input.button-left {
+  color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgba(255, 99, 132, 1);
+  border-radius: 3px;
+  width: max-content;
+  display: inline-block;
+}
+
+input.button-left:hover {
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgba(255, 99, 132, 1) 0 0px 0px 40px inset;
+}
+
+input.button-center {
+  color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgb(13, 43, 12);
+  border-radius: 3px;
+  width: max-content;
+  display: inline-block;
+}
+
+input.button-center:hover {
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgb(13, 43, 12) 0 0px 0px 40px inset;
+}
+
+.button-center-wraper {
+  text-align: center;
+}
+
