@@ -50,7 +50,10 @@ function mode(array) {
 function range(array) {
     let sortedArray = Array.from(array);
     sortedArray.sort();
-    return [sortedArray[0], sortedArray[sortedArray.length - 1]];
+    let min = sortedArray[0];
+    let max = sortedArray[sortedArray.length - 1];
+    let range = max - min;
+    return [min, max, range];
 }
 
 function standardDeviation(array) {

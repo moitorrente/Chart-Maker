@@ -22,53 +22,93 @@ var data = {
 	datasets: [],
 };
 
+var option = {
+	responsive: false,
+	scales: {
+		xAxes: [{
+			type: 'time',
+			time: {
+				unit: 'day'
+			},
+			ticks: {
+				beginAtZero: false,
+			},
+			bounds: 'data',
+			distribution: 'linear',
+			//,gridLines: { color: "#fff" }
+		}],
+		yAxes: [{
+			id: 'right',
+			position: 'right',
+			display: false,
+			scaleLabel: {
+				display: true,
+				labelString: ''
+			},
+			ticks: {
+				beginAtZero: false,
+			},
+			//gridLines: { color: "#fff" }
+		}, {
+			id: 'left',
+			position: 'left',
+			display: false,
+			scaleLabel: {
+				display: true,
+				labelString: ''
+			},
+			ticks: {
+				beginAtZero: false
+			},
+			//,gridLines: { color: "#fff" }
+		}
+		]
+	},
+	onClick: function (evt) {
+		let element = myChart.getElementAtEvent(evt);
+		if (element.length > 0) {
+			let index = element[0]._index;
+			generateBodyMetrics(index);
+		}
+	}
+};
+
 var myChart = new Chart(ctx, {
 	type: 'line',
 	data: data,
-	options: {
-		responsive: false,
-		scales: {
-			xAxes: [{
-				type: 'time',
-				time: {
-					unit: 'day'
-				},
-				ticks: {
-					beginAtZero: false,
-				},
-				bounds: 'data',
-				distribution: 'linear',
-				//,gridLines: { color: "#fff" }
-			}],
-			yAxes: [{
-				id: 'right',
-				position: 'right',
-				display: false,
-				scaleLabel: {
-					display: true,
-					labelString: ''
-				},
-				ticks: {
-					beginAtZero: false,
-				},
-				//gridLines: { color: "#fff" }
-			}, {
-				id: 'left',
-				position: 'left',
-				display: false,
-				scaleLabel: {
-					display: true,
-					labelString: ''
-				},
-				ticks: {
-					beginAtZero: false
-				},
-				//,gridLines: { color: "#fff" }
-			}
-			]
-		}
-	}
+	options: option
 });
+var bodyData;
+
+function generateBodyMetrics(index) {
+	console.log(index);
+	console.log(dataSets.values[2][index]);
+	console.log(dataSets.values[1][index]);
+	console.log(dataSets.values[10][index]);
+	bodyData = new bodyMetrics('male', 26,
+		dataSets.values[2][index], // height
+		dataSets.values[1][index], // weight
+		dataSets.values[10][index]/* impedance*/);
+	console.log(bodyData);
+	let BMIText = document.getElementById("BMIText");
+	let MuscleText = document.getElementById("MuscleText");
+	let ProteinText = document.getElementById("ProteinText");
+	let BoneMassText = document.getElementById("BoneMassText");
+	let WaterText = document.getElementById("WaterText");
+	let BMRText = document.getElementById("BMRText");
+	let fatText = document.getElementById("fatText");
+	let VisceralFatText = document.getElementById("VisceralFatText");
+
+	BMIText.value = bodyData.BMI.value;
+	MuscleText.value = bodyData.muscleMass.value;
+	ProteinText.value = bodyData.proteinRate.value;
+	BoneMassText.value = bodyData.boneMass.value;
+	WaterText.value = bodyData.waterRate.value;
+	BMRText.value = bodyData.BMR.value;
+	fatText.value = bodyData.bodyFat.value;
+	VisceralFatText.value = bodyData.visceralFat.value;
+	bodyTypeText.value = bodyData.bodyType.value;
+}
 
 function resetChart() {
 	while (data.datasets.length) {
@@ -83,6 +123,13 @@ function resetChart() {
 }
 
 function processChart(index, position, colorIndex) {
+	//todo good implementation
+	// var bodyData = new bodyMetrics('male', 26,
+	// 	dataSets.values[2][dataSets.values[2].length - 1], //last height
+	// 	dataSets.values[1][dataSets.values[1].length - 1], //last weight
+	// 	dataSets.values[10][dataSets.values[10].length - 1]/*last impedance*/);
+
+
 	let pos;
 	if (position == 'left') {
 		pos = 1;
@@ -142,7 +189,7 @@ function generateChartDataset(dataArray, label, position, colorIndex, pointBackg
 	return newDataset;
 }
 
-function calculateStatistics(index){
+function calculateStatistics(index) {
 	let array = cleanArray(dataSets.values[index]);
 	let meanValue = mean(array);
 	let medianValue = median(array);
@@ -158,6 +205,7 @@ function calculateStatistics(index){
 	let maxText = document.getElementById("maxText");
 	let samplesText = document.getElementById("samplesText");
 	let lossSamplesText = document.getElementById("lossSamplesText");
+	let rangeText = document.getElementById("rangeText");
 
 	meanText.value = meanValue;
 	medianText.value = medianValue;
@@ -166,5 +214,6 @@ function calculateStatistics(index){
 	maxText.value = rangeValues[1];
 	samplesText.value = samplesNumberValue;
 	lossSamplesText.value = lossSamplesValue;
+	rangeText.value = rangeValues[2];
 }
 

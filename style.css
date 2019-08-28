@@ -4,9 +4,9 @@
   font-family: 'roboto';
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  background: black;
-  color: white;
+  /* overflow: hidden; */
+  /* background: black; */
+  /* color: white; */
  }
 
  .grid-container {
@@ -24,14 +24,14 @@
 .file-container { 
   grid-area: file-container; 
   margin: 10px;
-  background: #1E1E1E;
+  /* background: #1E1E1E; */
 }
 
 .options-container { 
   display: block;
   grid-area: options-container; 
   margin: 10px;
-  background: #1E1E1E;
+  /* background: #1E1E1E; */
 }
 
 
@@ -44,17 +44,17 @@
   text-align: center;
   float: center;
   margin: 10px;
-  background: #1E1E1E;
+  /* background: #1E1E1E; */
 }
 
 .statistics-container input{
-  border: none;
+  /* border: none; */
   text-align: center;
   width: 80px;
-  border-radius: 50px;
-  background: none;
+  /* border-radius: 50px; */
+  /* background: none; */
   font-weight: bold;
-  font-size: 20px;
+  /* font-size: 20px; */
 }
 
 .statistics-container label{
@@ -111,48 +111,48 @@
 
 .chart-container { 
   grid-area: chart-container; 
-  background: white;
+  /* background: white; */
   text-align: center;
 }
 
 
 input.button-right {
-  color: rgba(30, 22, 54, 0.6);
-  box-shadow: rgba(54, 162, 235, 1);
+  /* color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgba(54, 162, 235, 1); */
   border-radius: 3px;
   width: max-content;
   display: inline-block;
 }
 
 input.button-right:hover {
-  color: rgba(255, 255, 255, 0.85);
-  box-shadow: rgba(54, 162, 235, 1) 0 0px 0px 40px inset;
+  /* color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgba(54, 162, 235, 1) 0 0px 0px 40px inset; */
 }
 
 input.button-left {
-  color: rgba(30, 22, 54, 0.6);
-  box-shadow: rgba(255, 99, 132, 1);
+  /* color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgba(255, 99, 132, 1); */
   border-radius: 3px;
   width: max-content;
   display: inline-block;
 }
 
 input.button-left:hover {
-  color: rgba(255, 255, 255, 0.85);
-  box-shadow: rgba(255, 99, 132, 1) 0 0px 0px 40px inset;
+  /* color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgba(255, 99, 132, 1) 0 0px 0px 40px inset; */
 }
 
 input.button-center {
-  color: rgba(30, 22, 54, 0.6);
+  /* color: rgba(30, 22, 54, 0.6);
   box-shadow: rgb(13, 43, 12);
-  border-radius: 3px;
+  border-radius: 3px; */
   width: max-content;
   display: inline-block;
 }
 
 input.button-center:hover {
-  color: rgba(255, 255, 255, 0.85);
-  box-shadow: rgb(13, 43, 12) 0 0px 0px 40px inset;
+  /* color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgb(13, 43, 12) 0 0px 0px 40px inset; */
 }
 
 .button-center-wraper {

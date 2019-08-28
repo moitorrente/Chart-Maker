@@ -23,6 +23,7 @@
 
 			<div class="radiobuttons-container">
 				<h2>Opciones</h2>
+				<label for="">Dataset a tratar</label>
 				<select name="chart" id="chartList" class="list">Datos a mostrar</select>
 				<div>
 					<input type="radio" name="visualOptions" id="visualOptions" value="data">Solo datos</input>
@@ -35,7 +36,7 @@
 					<input type="radio" name="visualOptions" id="visualOptions" value="regression">Datos
 					interpolados + regresión lineal</input>
 				</div>
-				<div>
+				<!-- <div>
 					<div>
 						<label>Fecha inicial</label>
 						<input type="date" name="initialDate" id="initialDate">
@@ -44,7 +45,7 @@
 						<label>Fecha final</label>
 						<input type="date" name="finalDate" id="finalDate">
 					</div>
-				</div>
+				</div> -->
 				<div class="button-center-wraper">
 					<input type="button" value="Añadir en eje izquierdo" id="rightChartButton"
 						onclick="processChart(chartList.value, 'left', 1)" class="button-right">
@@ -87,8 +88,8 @@
 				<label>Número de muestras perdidas</label>
 			</div>
 			<div class="parm8-container">
-				<input type="text" id="lossSamplesText" disabled>
-				<label>Número de muestras perdidas</label>
+				<input type="text" id="rangeText" disabled>
+				<label>Rango</label>
 			</div>
 			<div class="statistics-btn-container">
 
@@ -101,6 +102,44 @@
 			<canvas style="display:none" id="myChart" width="1000" height="700"></canvas>
 		</div>
 	</div>
+	<div class="div">
+			<div class="div">
+				<input type="text" id="BMIText" disabled>
+				<label>IMC</label>
+			</div>
+			<div class="div">
+				<input type="text" id="MuscleText" disabled>
+				<label>Músculo</label>
+			</div>
+			<div class="div">
+				<input type="text" id="ProteinText" disabled>
+				<label>Proteina</label>
+			</div>
+			<div class="div">
+				<input type="text" id="BoneMassText" disabled>
+				<label>Masa ósea</label>
+			</div>
+			<div class="div">
+				<input type="text" id="WaterText" disabled>
+				<label>Agua</label>
+			</div>
+			<div class="div">
+				<input type="text" id="BMRText" disabled>
+				<label>Metabolismo basal</label>
+			</div>
+			<div class="div">
+				<input type="text" id="fatText" disabled>
+				<label>Grasa corporal</label>
+			</div>
+			<div class="div">
+				<input type="text" id="VisceralFatText" disabled>
+				<label>Grasa visceral</label>
+			</div>
+			<div class="div">
+				<input type="text" id="bodyTypeText" disabled>
+				<label>Tipo de cuerpo</label>
+			</div>
+		</div>
 </body>
 <script src="statistics.js"></script>
 <script src="script.js"></script>
@@ -109,3 +148,4 @@
 <script src="dataProcessing.js"></script>
 <script src="interpolation.js"></script>
 <script src="linearRegression.js"></script>
+<script src="bodyMetrics.js"></script>
