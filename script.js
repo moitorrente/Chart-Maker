@@ -81,15 +81,12 @@ var myChart = new Chart(ctx, {
 var bodyData;
 
 function generateBodyMetrics(index) {
-	console.log(index);
-	console.log(dataSets.values[2][index]);
-	console.log(dataSets.values[1][index]);
-	console.log(dataSets.values[10][index]);
+	//todo better implementation of index
 	bodyData = new bodyMetrics('male', 26,
 		dataSets.values[2][index], // height
 		dataSets.values[1][index], // weight
 		dataSets.values[10][index]/* impedance*/);
-	console.log(bodyData);
+
 	let BMIText = document.getElementById("BMIText");
 	let MuscleText = document.getElementById("MuscleText");
 	let ProteinText = document.getElementById("ProteinText");
@@ -99,15 +96,72 @@ function generateBodyMetrics(index) {
 	let fatText = document.getElementById("fatText");
 	let VisceralFatText = document.getElementById("VisceralFatText");
 
-	BMIText.value = bodyData.BMI.value;
-	MuscleText.value = bodyData.muscleMass.value;
-	ProteinText.value = bodyData.proteinRate.value;
-	BoneMassText.value = bodyData.boneMass.value;
-	WaterText.value = bodyData.waterRate.value;
-	BMRText.value = bodyData.BMR.value;
-	fatText.value = bodyData.bodyFat.value;
-	VisceralFatText.value = bodyData.visceralFat.value;
-	bodyTypeText.value = bodyData.bodyType.value;
+	BMIText.value = bodyData.BMI.value + " (" + bodyData.BMI.text + ")";
+	BMIText.style.backgroundColor = bodyData.BMI.color;
+
+	if (bodyData.muscleMass.value) {
+		MuscleText.value = bodyData.muscleMass.value + " kg" + " (" + bodyData.muscleMass.text + ")";;
+		MuscleText.style.backgroundColor = bodyData.muscleMass.color;
+	} else {
+		MuscleText.value = "";
+		MuscleText.style.backgroundColor = "lightgray";
+	}
+
+	if (bodyData.proteinRate.value) {
+		ProteinText.value = bodyData.proteinRate.value + "%" + " (" + bodyData.proteinRate.text + ")";
+		ProteinText.style.backgroundColor = bodyData.proteinRate.color;
+	} else {
+		ProteinText.value = "";
+		ProteinText.style.backgroundColor = "lightgray";
+	}
+
+	if (bodyData.boneMass.value) {
+		BoneMassText.value = bodyData.boneMass.value + " kg" + " (" + bodyData.boneMass.text + ")"
+		BoneMassText.style.backgroundColor = bodyData.boneMass.color;
+	} else {
+		BoneMassText.value = "";
+		BoneMassText.style.backgroundColor = "lightgray";
+	}
+
+	if (bodyData.waterRate.value) {
+		WaterText.value = bodyData.waterRate.value + "%" + " (" + bodyData.waterRate.text + ")";
+		WaterText.style.backgroundColor = bodyData.waterRate.color;
+	} else {
+		WaterText.value = "";
+		WaterText.style.backgroundColor = "lightgray";
+	}
+	if (bodyData.BMR.value) {
+		BMRText.value = bodyData.BMR.value + " kcal"+ " (" + bodyData.BMR.text + ")";
+		BMRText.style.backgroundColor = bodyData.BMR.color;
+	} else {
+		BMRText.value = "";
+		BMRText.style.backgroundColor = "lightgray";
+	}
+
+	if (bodyData.bodyFat.value) {
+		fatText.value = bodyData.bodyFat.value + "%" + " (" + bodyData.bodyFat.text + ")";
+		fatText.style.backgroundColor = bodyData.bodyFat.color;
+	} else {
+		fatText.value = "";
+		fatText.style.backgroundColor = "lightgray";
+	}
+
+	if (bodyData.visceralFat.value) {
+		VisceralFatText.value = bodyData.visceralFat.value + "%" + " (" + bodyData.visceralFat.text + ")";
+		VisceralFatText.style.backgroundColor = bodyData.visceralFat.color;
+	} else {
+		VisceralFatText.value = "";
+		VisceralFatText.style.backgroundColor = "lightgray";
+	}
+
+	if (bodyData.bodyType.value) {
+		bodyTypeText.value = bodyData.bodyType.value;
+	} else {
+		bodyTypeText.value = "";
+		bodyTypeText.style.backgroundColor = "lightgray";
+	}
+
+
 }
 
 function resetChart() {
@@ -123,13 +177,6 @@ function resetChart() {
 }
 
 function processChart(index, position, colorIndex) {
-	//todo good implementation
-	// var bodyData = new bodyMetrics('male', 26,
-	// 	dataSets.values[2][dataSets.values[2].length - 1], //last height
-	// 	dataSets.values[1][dataSets.values[1].length - 1], //last weight
-	// 	dataSets.values[10][dataSets.values[10].length - 1]/*last impedance*/);
-
-
 	let pos;
 	if (position == 'left') {
 		pos = 1;
