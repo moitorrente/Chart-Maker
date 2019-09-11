@@ -21,7 +21,8 @@ class bodyMetrics {
         this.sex = sex;
         this.age = age;
         this.height = height;
-
+        //todo 
+        //create color array
         this.BMI.colorArray = ["#4092e4", "#10b269", "#ffc301", "#f28d19", "#fa6a50"];
         this.BMI.textArray = ["Bajo", "Normal", "Aumentó", "Alto", "Muy alto"];
 
@@ -132,7 +133,7 @@ class bodyMetrics {
     }
 
     getBMIScale() {
-        return [18.5, 25, 28, 32];
+        return [18.5, 25, 28, 32, 99];
     }
 
 
