@@ -167,7 +167,7 @@ class bodyMetrics {
         }
         for (let years in Object.keys(scales[this.sex])) {
             if (this.age < Object.keys(scales[this.sex])[years]) {
-                return [0, scales[this.sex][Object.keys(scales[this.sex])[years]] * weight, 9999999];
+                return [0, this.roundDecimals(scales[this.sex][Object.keys(scales[this.sex])[years]] * weight), 9999999];
             }
         }
     }

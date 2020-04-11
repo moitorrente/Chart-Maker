@@ -4,6 +4,7 @@
   font-family: 'roboto';
   margin: 0;
   padding: 0;
+  background-color: rgb(241, 241, 241);
  }
 
  .grid-container {
@@ -177,7 +178,7 @@ details{
   padding: 1rem;
 	background-color: #ffffff;
 	width: 35rem;
-	margin: 1.5rem;
+	margin: 1rem;
 	transition: height 0.6s ease;
   overflow: hidden;
 }
@@ -189,7 +190,7 @@ details:not([open])
 
 details[open]
 {
-    height: 150px;
+    height: 120px;
 }
 
 details summary::-webkit-details-marker {
