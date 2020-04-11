@@ -4,9 +4,6 @@
   font-family: 'roboto';
   margin: 0;
   padding: 0;
-  /* overflow: hidden; */
-  /* background: black; */
-  /* color: white; */
  }
 
  .grid-container {
@@ -157,4 +154,49 @@ input.button-center:hover {
 
 .button-center-wraper {
   text-align: center;
+}
+
+canvas{
+	margin-top: 1rem;
+}
+
+summary{
+	cursor: pointer;
+	height: 1.5rem;
+	user-select: none; 
+}
+
+details{
+  text-align: left;
+	color: rgb(100, 100, 100);
+	font-weight: bold;
+	border-radius: 8px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #d3d3d3;
+  padding: 1rem;
+	background-color: #ffffff;
+	width: 35rem;
+	margin: 1.5rem;
+	transition: height 0.6s ease;
+  overflow: hidden;
+}
+
+details:not([open])
+{
+    height: 1.25em;
+}
+
+details[open]
+{
+    height: 150px;
+}
+
+details summary::-webkit-details-marker {
+	position: relative;
+	left: 90%;
+}
+
+*:focus {
+    outline: none;
 }

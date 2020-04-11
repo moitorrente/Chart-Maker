@@ -82,86 +82,53 @@ var bodyData;
 
 function generateBodyMetrics(index) {
 	//todo better implementation of index
-	bodyData = new bodyMetrics('male', 26,
+	bodyData = new bodyMetrics('male', 27,
 		dataSets.values[2][index], // height
 		dataSets.values[1][index], // weight
 		dataSets.values[10][index]/* impedance*/);
 
-	let BMIText = document.getElementById("BMIText");
-	let MuscleText = document.getElementById("MuscleText");
-	let ProteinText = document.getElementById("ProteinText");
-	let BoneMassText = document.getElementById("BoneMassText");
-	let WaterText = document.getElementById("WaterText");
-	let BMRText = document.getElementById("BMRText");
-	let fatText = document.getElementById("fatText");
-	let VisceralFatText = document.getElementById("VisceralFatText");
 
-	BMIText.value = bodyData.BMI.value + " (" + bodyData.BMI.text + ")";
-	BMIText.style.backgroundColor = bodyData.BMI.color;
+	let BMIText = 'IMC' + ' - ' + bodyData.BMI.value+ ' - ' + bodyData.BMI.text;
+	let BMIchart = new Chart1D('BMIChart', BMIText, bodyData.BMI.scale, bodyData.BMI.colorArray);
+	BMIchart.show(bodyData.BMI.value, bodyData.BMI.text);
+	document.getElementById('BMIChartSummary').style.color = bodyData.BMI.color;
 
-	if (bodyData.muscleMass.value) {
-		MuscleText.value = bodyData.muscleMass.value + " kg" + " (" + bodyData.muscleMass.text + ")";;
-		MuscleText.style.backgroundColor = bodyData.muscleMass.color;
-	} else {
-		MuscleText.value = "";
-		MuscleText.style.backgroundColor = "lightgray";
-	}
+	let MuscleText = 'Músculo' + ' - ' + bodyData.muscleMass.value + ' kg'+ ' - ' + bodyData.muscleMass.text;
+	let muscleChart = new Chart1D('MuscleChart', MuscleText, bodyData.muscleMass.scale, bodyData.muscleMass.colorArray);
+	muscleChart.show(bodyData.muscleMass.value, bodyData.muscleMass.text);
+	document.getElementById('MuscleChartSummary').style.color = bodyData.muscleMass.color;
 
-	if (bodyData.proteinRate.value) {
-		ProteinText.value = bodyData.proteinRate.value + "%" + " (" + bodyData.proteinRate.text + ")";
-		ProteinText.style.backgroundColor = bodyData.proteinRate.color;
-	} else {
-		ProteinText.value = "";
-		ProteinText.style.backgroundColor = "lightgray";
-	}
+	let ProteinText = 'Proteina' + ' - ' + bodyData.proteinRate.value + '%' + ' - ' + bodyData.proteinRate.text;
+	let proteinChart = new Chart1D('ProteinChart', ProteinText, bodyData.proteinRate.scale, bodyData.proteinRate.colorArray);
+	proteinChart.show(bodyData.proteinRate.value, bodyData.proteinRate.text);
+	document.getElementById('ProteinChartSummary').style.color = bodyData.proteinRate.color;
 
-	if (bodyData.boneMass.value) {
-		BoneMassText.value = bodyData.boneMass.value + " kg" + " (" + bodyData.boneMass.text + ")"
-		BoneMassText.style.backgroundColor = bodyData.boneMass.color;
-	} else {
-		BoneMassText.value = "";
-		BoneMassText.style.backgroundColor = "lightgray";
-	}
+	let BoneMassText = 'Masa osea' + ' - ' + bodyData.boneMass.value + ' kg' + ' - ' + bodyData.boneMass.text;
+	let BoneMassChart = new Chart1D('BoneMassChart', BoneMassText, bodyData.boneMass.scale, bodyData.boneMass.colorArray);
+	BoneMassChart.show(bodyData.boneMass.value, bodyData.boneMass.text);
+	document.getElementById('BoneMassChartSummary').style.color = bodyData.boneMass.color;
 
-	if (bodyData.waterRate.value) {
-		WaterText.value = bodyData.waterRate.value + "%" + " (" + bodyData.waterRate.text + ")";
-		WaterText.style.backgroundColor = bodyData.waterRate.color;
-	} else {
-		WaterText.value = "";
-		WaterText.style.backgroundColor = "lightgray";
-	}
-	if (bodyData.BMR.value) {
-		BMRText.value = bodyData.BMR.value + " kcal"+ " (" + bodyData.BMR.text + ")";
-		BMRText.style.backgroundColor = bodyData.BMR.color;
-	} else {
-		BMRText.value = "";
-		BMRText.style.backgroundColor = "lightgray";
-	}
+	let WaterRateText = 'Agua' + ' - ' + bodyData.waterRate.value + '%' + ' - ' + bodyData.waterRate.text;
+	let WaterRateChart = new Chart1D('WaterChart', WaterRateText, bodyData.waterRate.scale, bodyData.waterRate.colorArray);
+	WaterRateChart.show(bodyData.waterRate.value, bodyData.waterRate.text);
+	document.getElementById('WaterChartSummary').style.color = bodyData.waterRate.color;
 
-	if (bodyData.bodyFat.value) {
-		fatText.value = bodyData.bodyFat.value + "%" + " (" + bodyData.bodyFat.text + ")";
-		fatText.style.backgroundColor = bodyData.bodyFat.color;
-	} else {
-		fatText.value = "";
-		fatText.style.backgroundColor = "lightgray";
-	}
+	let BMRText = 'Metabolismo basal' + ' - ' + bodyData.BMR.value + ' kcal' + ' - ' + bodyData.BMR.text;
+	let BMRChart = new Chart1D('BMRChart', BMRText, bodyData.BMR.scale, bodyData.BMR.colorArray);
+	BMRChart.show(bodyData.BMR.value, bodyData.BMR.text);
+	document.getElementById('BMRChartSummary').style.color = bodyData.BMR.color;
 
-	if (bodyData.visceralFat.value) {
-		VisceralFatText.value = bodyData.visceralFat.value + "%" + " (" + bodyData.visceralFat.text + ")";
-		VisceralFatText.style.backgroundColor = bodyData.visceralFat.color;
-	} else {
-		VisceralFatText.value = "";
-		VisceralFatText.style.backgroundColor = "lightgray";
-	}
+	let bodyFatText = 'Grasa corporal' + ' - ' + bodyData.bodyFat.value + '%' + ' - ' + bodyData.bodyFat.text;
+	let bodyFatChart = new Chart1D('FatChart', bodyFatText, bodyData.bodyFat.scale, bodyData.bodyFat.colorArray);
+	bodyFatChart.show(bodyData.bodyFat.value, bodyData.bodyFat.text);
+	document.getElementById('FatChartSummary').style.color = bodyData.bodyFat.color;
 
-	if (bodyData.bodyType.value) {
-		bodyTypeText.value = bodyData.bodyType.value;
-	} else {
-		bodyTypeText.value = "";
-		bodyTypeText.style.backgroundColor = "lightgray";
-	}
+	let visceralFatext = 'Grasa visceral' + ' - ' + bodyData.visceralFat.value + '%' + ' - ' + bodyData.visceralFat.text;
+	let visceralFatChart = new Chart1D('VisceralFatChart', visceralFatext, bodyData.visceralFat.scale, bodyData.visceralFat.colorArray);
+	visceralFatChart.show(bodyData.visceralFat.value, bodyData.visceralFat.text);
+	document.getElementById('VisceralFatChartSummary').style.color = bodyData.visceralFat.color;
 
-
+	document.getElementById('bodyTypeSummary').innerHTML = bodyData.bodyType.value;
 }
 
 function resetChart() {
@@ -225,7 +192,7 @@ function generateChartDataset(dataArray, label, position, colorIndex, pointBackg
 	}
 	var newDataset = {
 		label: label,
-		//lineTension: 0,  //Para quitar el interpolado
+		lineTension: 0,  //Para quitar el interpolado
 		yAxisID: position,
 		data: dataArray,
 		borderColor: colorArray[colorIndex],

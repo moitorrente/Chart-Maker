@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Generador de graficas</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es-do.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
@@ -102,44 +102,60 @@
 			<canvas style="display:none" id="myChart" width="1000" height="700"></canvas>
 		</div>
 	</div>
-	<div class="div">
-			<div class="div">
-				<input type="text" id="BMIText" disabled>
-				<label>IMC</label>
-			</div>
-			<div class="div">
-				<input type="text" id="MuscleText" disabled>
-				<label>Músculo</label>
-			</div>
-			<div class="div">
-				<input type="text" id="ProteinText" disabled>
-				<label>Proteina</label>
-			</div>
-			<div class="div">
-				<input type="text" id="BoneMassText" disabled>
-				<label>Masa ósea</label>
-			</div>
-			<div class="div">
-				<input type="text" id="WaterText" disabled>
-				<label>Agua</label>
-			</div>
-			<div class="div">
-				<input type="text" id="BMRText" disabled>
-				<label>Metabolismo basal</label>
-			</div>
-			<div class="div">
-				<input type="text" id="fatText" disabled>
-				<label>Grasa corporal</label>
-			</div>
-			<div class="div">
-				<input type="text" id="VisceralFatText" disabled>
-				<label>Grasa visceral</label>
-			</div>
-			<div class="div">
-				<input type="text" id="bodyTypeText" disabled>
-				<label>Tipo de cuerpo</label>
-			</div>
+
+	<div>
+		<div class="chart-container">
+			<details>
+				<summary id="BMIChartSummary"></summary>
+				<canvas id="BMIChart" width="600" height="100" class="chart1D"></canvas>
+
 		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="MuscleChartSummary"></summary>
+				<canvas id="MuscleChart" width="600" height="100" class="chart1D"></canvas>
+
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="ProteinChartSummary"></summary>
+				<canvas id="ProteinChart" width="600" height="100" class="chart1D"></canvas>
+
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="BoneMassChartSummary"></summary>
+				<canvas id="BoneMassChart" width="600" height="100" class="chart1D"></canvas>
+
+		</div>
+
+		<div class="chart-container">
+			<details>
+				<summary id="WaterChartSummary"></summary>
+				<canvas id="WaterChart" width="600" height="100" class="chart1D"></canvas>
+
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="BMRChartSummary"></summary>
+				<canvas id="BMRChart" width="600" height="100" class="chart1D"></canvas>
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="FatChartSummary"></summary>
+				<canvas id="FatChart" width="600" height="100" class="chart1D"></canvas>
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="VisceralFatChartSummary"></summary>
+				<canvas id="VisceralFatChart" width="600" height="100" class="chart1D"></canvas>
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="bodyTypeSummary"></summary>
+		</div>
+	</div>
+
 </body>
 <script src="statistics.js"></script>
 <script src="script.js"></script>
@@ -149,3 +165,4 @@
 <script src="interpolation.js"></script>
 <script src="linearRegression.js"></script>
 <script src="bodyMetrics.js"></script>
+<script src="Chart1D.js"></script>

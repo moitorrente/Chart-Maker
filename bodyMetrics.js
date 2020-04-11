@@ -62,6 +62,9 @@ class bodyMetrics {
             this.visceralFat.value = this.getVisceralFat(weight);
             this.visceralFat.scale = this.getVisceralFatScale();
             this.idealWeight.value = this.getIdealWeight(weight);
+            this.evaluateMetric(this.BMI);
+            this.evaluateMetric(this.BMR);
+            this.evaluateMetric(this.visceralFat);
         }
         // console.log(this);
     }
@@ -112,6 +115,11 @@ class bodyMetrics {
                 break;
             }
         }
+
+        if(obj==this.BMR){
+            pos--;
+        }
+
         obj.color = obj.colorArray[pos];
         obj.text = obj.textArray[pos];
         obj.index = pos;
@@ -133,7 +141,7 @@ class bodyMetrics {
     }
 
     getBMIScale() {
-        return [18.5, 25, 28, 32, 99];
+        return [18.5, 25, 28, 32, 9999999];
     }
 
 
@@ -159,7 +167,7 @@ class bodyMetrics {
         }
         for (let years in Object.keys(scales[this.sex])) {
             if (this.age < Object.keys(scales[this.sex])[years]) {
-                return scales[this.sex][Object.keys(scales[this.sex])[years]] * weight;
+                return [0, scales[this.sex][Object.keys(scales[this.sex])[years]] * weight, 9999999];
             }
         }
     }
@@ -179,15 +187,15 @@ class bodyMetrics {
 
     getBodyFatScale() {
         let scales = [
-            { 'min': 0, 'max': 20, 'female': [18, 23, 30, 35, 99], 'male': [8, 14, 21, 25, 99] },
-            { 'min': 21, 'max': 25, 'female': [19, 24, 30, 35, 99], 'male': [10, 15, 22, 26, 99] },
-            { 'min': 26, 'max': 30, 'female': [20, 25, 31, 36, 99], 'male': [11, 17, 22, 27, 99] },
-            { 'min': 31, 'max': 35, 'female': [21, 26, 33, 36, 99], 'male': [13, 17, 25, 28, 99] },
-            { 'min': 46, 'max': 40, 'female': [22, 27, 34, 37, 99], 'male': [15, 20, 26, 29, 99] },
-            { 'min': 41, 'max': 45, 'female': [23, 28, 35, 38, 99], 'male': [16, 22, 27, 30, 99] },
-            { 'min': 46, 'max': 50, 'female': [24, 30, 36, 38, 99], 'male': [17, 23, 29, 31, 99] },
-            { 'min': 51, 'max': 55, 'female': [26, 31, 36, 39, 99], 'male': [19, 25, 30, 33, 99] },
-            { 'min': 56, 'max': 100, 'female': [27, 32, 37, 40, 99], 'male': [21, 26, 31, 34, 99] },
+            { 'min': 0, 'max': 20, 'female': [18, 23, 30, 35, 9999999], 'male': [8, 14, 21, 25, 9999999] },
+            { 'min': 21, 'max': 25, 'female': [19, 24, 30, 35, 9999999], 'male': [10, 15, 22, 26, 9999999] },
+            { 'min': 26, 'max': 30, 'female': [20, 25, 31, 36, 9999999], 'male': [11, 17, 22, 27, 9999999] },
+            { 'min': 31, 'max': 35, 'female': [21, 26, 33, 36, 9999999], 'male': [13, 17, 25, 28, 9999999] },
+            { 'min': 46, 'max': 40, 'female': [22, 27, 34, 37, 9999999], 'male': [15, 20, 26, 29, 9999999] },
+            { 'min': 41, 'max': 45, 'female': [23, 28, 35, 38, 9999999], 'male': [16, 22, 27, 30, 9999999] },
+            { 'min': 46, 'max': 50, 'female': [24, 30, 36, 38, 9999999], 'male': [17, 23, 29, 31, 9999999] },
+            { 'min': 51, 'max': 55, 'female': [26, 31, 36, 39, 9999999], 'male': [19, 25, 30, 33, 9999999] },
+            { 'min': 56, 'max': 100, 'female': [27, 32, 37, 40, 9999999], 'male': [21, 26, 31, 34, 9999999] },
         ]
         for (let scale in scales) {
             if (this.age >= scales[scale].min && this.age <= scales[scale].max) {
@@ -274,7 +282,7 @@ class bodyMetrics {
         ]
         for (let scale in scales) {
             if (weight >= scales[scale][this.sex].min) {
-                return [scales[scale][this.sex].optimal - 1.2, scales[scale][this.sex].optimal + 1, 99];
+                return [scales[scale][this.sex].optimal - 1.2, scales[scale][this.sex].optimal + 1, 9999999];
             }
         }
     }
@@ -292,9 +300,9 @@ class bodyMetrics {
 
     getMuscleMassScale() {
         let scales = [
-            { 'min': 170, 'female': [36.5, 42.5, 99], 'male': [49.4, 59.5, 99] },
-            { 'min': 160, 'female': [32.9, 37.5, 99], 'male': [44.0, 52.4, 99] },
-            { 'min': 0, 'female': [29.1, 34.7, 99], 'male': [38.5, 46.5, 99] }
+            { 'min': 170, 'female': [36.5, 42.5, 9999999], 'male': [49.4, 59.5, 9999999] },
+            { 'min': 160, 'female': [32.9, 37.5, 9999999], 'male': [44.0, 52.4, 9999999] },
+            { 'min': 0, 'female': [29.1, 34.7, 9999999], 'male': [38.5, 46.5, 9999999] }
         ]
 
         for (let scale in scales) {
@@ -313,7 +321,7 @@ class bodyMetrics {
     }
 
     getProteinScale() {
-        return [16, 20, 99];
+        return [16, 20, 9999999];
     }
 
     getVisceralFat(weight) {
