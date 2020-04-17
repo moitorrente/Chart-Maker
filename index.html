@@ -4,10 +4,21 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Generador de graficas</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+	<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.0"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es-do.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<script defer src="../src/math/statistics.js"></script>
+	<script defer src="script.js"></script>
+	<script defer src="../src/fileHandler.js"></script>
+	<script defer src="../src/optionsHandler.js"></script>
+	<script defer src="../src/dataProcessing.js"></script>
+	<script defer src="../src/math/interpolation.js"></script>
+	<script defer src="../src/math/linearRegression.js"></script>
+	<script defer src="../src/bodyMetrics.js"></script>
+	<script defer src="../src/Chart1D.js"></script>
 </head>
 
 <body>
@@ -26,7 +37,7 @@
 				<label for="">Dataset a tratar</label>
 				<select name="chart" id="chartList" class="list">Datos a mostrar</select>
 				<div>
-					<input type="radio" name="visualOptions" id="visualOptions" value="data">Solo datos</input>
+					<input type="radio" name="visualOptions" id="visualOptions" value="data" checked>Solo datos</input>
 				</div>
 				<div>
 					<input type="radio" name="visualOptions" id="visualOptions" value="interpolation">Datos
@@ -98,12 +109,13 @@
 			</div>
 		</div>
 
+		
 		<div class="chart-container">
 			<canvas style="display:none" id="myChart" width="1000" height="700"></canvas>
 		</div>
 	</div>
 
-	<div id="statisticsPanel" class="statistics-container">
+	<div id="miniCharts" class="statistics-container" style="display: none">
 		<div class="chart-container">
 			<details>
 				<summary id="BMIChartSummary"></summary>
@@ -157,12 +169,3 @@
 	</div>
 
 </body>
-<script src="statistics.js"></script>
-<script src="script.js"></script>
-<script src="fileHandler.js"></script>
-<script src="optionsHandler.js"></script>
-<script src="dataProcessing.js"></script>
-<script src="interpolation.js"></script>
-<script src="linearRegression.js"></script>
-<script src="bodyMetrics.js"></script>
-<script src="Chart1D.js"></script>

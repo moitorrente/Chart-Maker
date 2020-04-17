@@ -24,6 +24,15 @@ var data = {
 
 var option = {
 	responsive: false,
+	pan: {
+		enabled: true,
+		mode: 'x',
+	},
+	zoom: {
+		enabled: true,
+		mode: 'x',
+		drag: false,
+	},
 	scales: {
 		xAxes: [{
 			type: 'time',
@@ -35,7 +44,7 @@ var option = {
 			},
 			bounds: 'data',
 			distribution: 'linear',
-			//,gridLines: { color: "#fff" }
+			//gridLines: { color: "#fff" },
 		}],
 		yAxes: [{
 			id: 'right',
@@ -79,57 +88,6 @@ var myChart = new Chart(ctx, {
 	options: option
 });
 var bodyData;
-
-function generateBodyMetrics(index) {
-	//todo better implementation of index
-	bodyData = new bodyMetrics('male', 27,
-		dataSets.values[2][index], // height
-		dataSets.values[1][index], // weight
-		dataSets.values[10][index]/* impedance*/);
-
-
-	let BMIText = 'IMC' + ' - ' + bodyData.BMI.value+ ' - ' + bodyData.BMI.text;
-	let BMIchart = new Chart1D('BMIChart', BMIText, bodyData.BMI.scale, bodyData.BMI.colorArray);
-	BMIchart.show(bodyData.BMI.value, bodyData.BMI.text);
-	document.getElementById('BMIChartSummary').style.color = bodyData.BMI.color;
-
-	let MuscleText = 'Músculo' + ' - ' + bodyData.muscleMass.value + ' kg'+ ' - ' + bodyData.muscleMass.text;
-	let muscleChart = new Chart1D('MuscleChart', MuscleText, bodyData.muscleMass.scale, bodyData.muscleMass.colorArray);
-	muscleChart.show(bodyData.muscleMass.value, bodyData.muscleMass.text);
-	document.getElementById('MuscleChartSummary').style.color = bodyData.muscleMass.color;
-
-	let ProteinText = 'Proteina' + ' - ' + bodyData.proteinRate.value + '%' + ' - ' + bodyData.proteinRate.text;
-	let proteinChart = new Chart1D('ProteinChart', ProteinText, bodyData.proteinRate.scale, bodyData.proteinRate.colorArray);
-	proteinChart.show(bodyData.proteinRate.value, bodyData.proteinRate.text);
-	document.getElementById('ProteinChartSummary').style.color = bodyData.proteinRate.color;
-
-	let BoneMassText = 'Masa osea' + ' - ' + bodyData.boneMass.value + ' kg' + ' - ' + bodyData.boneMass.text;
-	let BoneMassChart = new Chart1D('BoneMassChart', BoneMassText, bodyData.boneMass.scale, bodyData.boneMass.colorArray);
-	BoneMassChart.show(bodyData.boneMass.value, bodyData.boneMass.text);
-	document.getElementById('BoneMassChartSummary').style.color = bodyData.boneMass.color;
-
-	let WaterRateText = 'Agua' + ' - ' + bodyData.waterRate.value + '%' + ' - ' + bodyData.waterRate.text;
-	let WaterRateChart = new Chart1D('WaterChart', WaterRateText, bodyData.waterRate.scale, bodyData.waterRate.colorArray);
-	WaterRateChart.show(bodyData.waterRate.value, bodyData.waterRate.text);
-	document.getElementById('WaterChartSummary').style.color = bodyData.waterRate.color;
-
-	let BMRText = 'Metabolismo basal' + ' - ' + bodyData.BMR.value + ' kcal' + ' - ' + bodyData.BMR.text;
-	let BMRChart = new Chart1D('BMRChart', BMRText, bodyData.BMR.scale, bodyData.BMR.colorArray);
-	BMRChart.show(bodyData.BMR.value, bodyData.BMR.text);
-	document.getElementById('BMRChartSummary').style.color = bodyData.BMR.color;
-
-	let bodyFatText = 'Grasa corporal' + ' - ' + bodyData.bodyFat.value + '%' + ' - ' + bodyData.bodyFat.text;
-	let bodyFatChart = new Chart1D('FatChart', bodyFatText, bodyData.bodyFat.scale, bodyData.bodyFat.colorArray);
-	bodyFatChart.show(bodyData.bodyFat.value, bodyData.bodyFat.text);
-	document.getElementById('FatChartSummary').style.color = bodyData.bodyFat.color;
-
-	let visceralFatext = 'Grasa visceral' + ' - ' + bodyData.visceralFat.value + '%' + ' - ' + bodyData.visceralFat.text;
-	let visceralFatChart = new Chart1D('VisceralFatChart', visceralFatext, bodyData.visceralFat.scale, bodyData.visceralFat.colorArray);
-	visceralFatChart.show(bodyData.visceralFat.value, bodyData.visceralFat.text);
-	document.getElementById('VisceralFatChartSummary').style.color = bodyData.visceralFat.color;
-
-	document.getElementById('bodyTypeSummary').innerHTML = bodyData.bodyType.value;
-}
 
 function resetChart() {
 	while (data.datasets.length) {
@@ -202,32 +160,3 @@ function generateChartDataset(dataArray, label, position, colorIndex, pointBackg
 	myChart.options.scales.yAxes[index].scaleLabel.labelString = label;
 	return newDataset;
 }
-
-function calculateStatistics(index) {
-	let array = cleanArray(dataSets.values[index]);
-	let meanValue = mean(array);
-	let medianValue = median(array);
-	let modeValue = mode(array);
-	let rangeValues = range(array);
-	let samplesNumberValue = samplesNumber(array);
-	let lossSamplesValue = lossSamplesNumber(array);
-
-	let meanText = document.getElementById("meanText");
-	let medianText = document.getElementById("medianText");
-	let modeText = document.getElementById("modeText");
-	let minText = document.getElementById("minText");
-	let maxText = document.getElementById("maxText");
-	let samplesText = document.getElementById("samplesText");
-	let lossSamplesText = document.getElementById("lossSamplesText");
-	let rangeText = document.getElementById("rangeText");
-
-	meanText.value = meanValue;
-	medianText.value = medianValue;
-	modeText.value = modeValue;
-	minText.value = rangeValues[0];
-	maxText.value = rangeValues[1];
-	samplesText.value = samplesNumberValue;
-	lossSamplesText.value = lossSamplesValue;
-	rangeText.value = rangeValues[2];
-}
-

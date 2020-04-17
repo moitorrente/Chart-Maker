@@ -53,6 +53,7 @@ function range(array) {
     let min = sortedArray[0];
     let max = sortedArray[sortedArray.length - 1];
     let range = max - min;
+    range = range.toFixed(2);
     return [min, max, range];
 }
 
@@ -77,4 +78,32 @@ function samplesNumber(array){
 
 function lossSamplesNumber(array){
     return timestamp.length - array.length;
+}
+
+function calculateStatistics(index) {
+	let array = cleanArray(dataSets.values[index]);
+	let meanValue = mean(array);
+	let medianValue = median(array);
+	let modeValue = mode(array);
+	let rangeValues = range(array);
+	let samplesNumberValue = samplesNumber(array);
+	let lossSamplesValue = lossSamplesNumber(array);
+
+	let meanText = document.getElementById("meanText");
+	let medianText = document.getElementById("medianText");
+	let modeText = document.getElementById("modeText");
+	let minText = document.getElementById("minText");
+	let maxText = document.getElementById("maxText");
+	let samplesText = document.getElementById("samplesText");
+	let lossSamplesText = document.getElementById("lossSamplesText");
+	let rangeText = document.getElementById("rangeText");
+
+	meanText.value = meanValue;
+	medianText.value = medianValue;
+	modeText.value = modeValue;
+	minText.value = rangeValues[0];
+	maxText.value = rangeValues[1];
+	samplesText.value = samplesNumberValue;
+	lossSamplesText.value = lossSamplesValue;
+	rangeText.value = rangeValues[2];
 }

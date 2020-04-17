@@ -30,6 +30,9 @@ function loadHandler(event) {
     var csv = event.target.result;
     processData(csv);
     loadOptions();
+
+    processChart(chartList.value, 'left', 1);
+    dropdownChanged();
 }
 
 function errorHandler(evt) {

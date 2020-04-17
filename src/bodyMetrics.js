@@ -1,8 +1,6 @@
 //Based on: https://github.com/wiecosystem/Bluetooth/blob/master/sandbox/body_metrics.py
 //          https://github.com/oliexdev/openScale/blob/ecc8f2fd01db50456ec45b170d20e2aeb7323476/android_app/app/src/main/java/com/health/openscale/core/bluetooth/lib/MiScaleLib.java
 
-
-
 class bodyMetrics {
     constructor(sex, age, height, weight, impedance) {
         this.BMI = {};
@@ -116,7 +114,7 @@ class bodyMetrics {
             }
         }
 
-        if(obj==this.BMR){
+        if (obj == this.BMR) {
             pos--;
         }
 
@@ -403,4 +401,75 @@ class bodyMetrics {
     }
 }
 
+function generateBodyMetrics(index) {
+    //todo better implementation of index
+    bodyData = new bodyMetrics('male', 27,
+        dataSets.values[2][index], // height
+        dataSets.values[1][index], // weight
+        dataSets.values[10][index]/* impedance*/);
+
+    if (bodyData.BMI.value) {
+        let BMIText = 'IMC' + ' - ' + bodyData.BMI.value + ' - ' + bodyData.BMI.text;
+        let BMIchart = new Chart1D('BMIChart', BMIText, bodyData.BMI.scale, bodyData.BMI.colorArray);
+        BMIchart.show(bodyData.BMI.value, bodyData.BMI.text);
+        document.getElementById('BMIChartSummary').style.color = bodyData.BMI.color;
+    }
+
+    if (bodyData.muscleMass.value) {
+        let MuscleText = 'Músculo' + ' - ' + bodyData.muscleMass.value + ' kg' + ' - ' + bodyData.muscleMass.text;
+        let muscleChart = new Chart1D('MuscleChart', MuscleText, bodyData.muscleMass.scale, bodyData.muscleMass.colorArray);
+        muscleChart.show(bodyData.muscleMass.value, bodyData.muscleMass.text);
+        document.getElementById('MuscleChartSummary').style.color = bodyData.muscleMass.color;
+    }
+
+    if (bodyData.proteinRate.value) {
+        let ProteinText = 'Proteina' + ' - ' + bodyData.proteinRate.value + '%' + ' - ' + bodyData.proteinRate.text;
+        let proteinChart = new Chart1D('ProteinChart', ProteinText, bodyData.proteinRate.scale, bodyData.proteinRate.colorArray);
+        proteinChart.show(bodyData.proteinRate.value, bodyData.proteinRate.text);
+        document.getElementById('ProteinChartSummary').style.color = bodyData.proteinRate.color;
+    }
+
+    if (bodyData.boneMass.value) {
+        let BoneMassText = 'Masa osea' + ' - ' + bodyData.boneMass.value + ' kg' + ' - ' + bodyData.boneMass.text;
+        let BoneMassChart = new Chart1D('BoneMassChart', BoneMassText, bodyData.boneMass.scale, bodyData.boneMass.colorArray);
+        BoneMassChart.show(bodyData.boneMass.value, bodyData.boneMass.text);
+        document.getElementById('BoneMassChartSummary').style.color = bodyData.boneMass.color;
+    }
+
+    if (bodyData.waterRate.value) {
+        let WaterRateText = 'Agua' + ' - ' + bodyData.waterRate.value + '%' + ' - ' + bodyData.waterRate.text;
+        let WaterRateChart = new Chart1D('WaterChart', WaterRateText, bodyData.waterRate.scale, bodyData.waterRate.colorArray);
+        WaterRateChart.show(bodyData.waterRate.value, bodyData.waterRate.text);
+        document.getElementById('WaterChartSummary').style.color = bodyData.waterRate.color;
+
+    }
+
+    if (bodyData.BMR.value) {
+        let BMRText = 'Metabolismo basal' + ' - ' + bodyData.BMR.value + ' kcal' + ' - ' + bodyData.BMR.text;
+        let BMRChart = new Chart1D('BMRChart', BMRText, bodyData.BMR.scale, bodyData.BMR.colorArray);
+        BMRChart.show(bodyData.BMR.value, bodyData.BMR.text);
+        document.getElementById('BMRChartSummary').style.color = bodyData.BMR.color;
+    }
+
+    if (bodyData.bodyFat.value) {
+        let bodyFatText = 'Grasa corporal' + ' - ' + bodyData.bodyFat.value + '%' + ' - ' + bodyData.bodyFat.text;
+        let bodyFatChart = new Chart1D('FatChart', bodyFatText, bodyData.bodyFat.scale, bodyData.bodyFat.colorArray);
+        bodyFatChart.show(bodyData.bodyFat.value, bodyData.bodyFat.text);
+        document.getElementById('FatChartSummary').style.color = bodyData.bodyFat.color;
+    } else {
+
+        document.getElementById('FatChartSummary').style.color = color.white;
+    }
+
+    if (bodyData.visceralFat.value) {
+        let visceralFatext = 'Grasa visceral' + ' - ' + bodyData.visceralFat.value + '%' + ' - ' + bodyData.visceralFat.text;
+        let visceralFatChart = new Chart1D('VisceralFatChart', visceralFatext, bodyData.visceralFat.scale, bodyData.visceralFat.colorArray);
+        visceralFatChart.show(bodyData.visceralFat.value, bodyData.visceralFat.text);
+        document.getElementById('VisceralFatChartSummary').style.color = bodyData.visceralFat.color;
+    }
+
+    if (bodyData.bodyType.value) {
+        document.getElementById('bodyTypeSummary').innerHTML = bodyData.bodyType.value;
+    }
+}
 
