@@ -130,7 +130,7 @@ function processChart(index, position, colorIndex) {
 		addChart(dataSets.values[index], dataSets.names[index], position, colorIdx);
 	} else if (display == 'interpolation') {
 		let interpolatedArray = interpolate(dataSets.values[index]);
-		addChart(interpolatedArray.values, dataSets.names[index], position, colorIdx, interpolatedArray.colors);
+		addChart(interpolatedArray.values, dataSets.names[index] +' interpolado', position, colorIdx, interpolatedArray.colors);
 	} else if (display == 'regression') {
 		let interpolatedArray = interpolate(dataSets.values[index]);
 		let regression = linearRegression(dataSets.values[0], interpolatedArray.values);
