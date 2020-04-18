@@ -1,6 +1,7 @@
 var header = [];
 var rawData = [];
 var timestamp = [];
+let colorIdx = 0;
 
 var dataSets = {
 	names: [],
@@ -99,9 +100,12 @@ function resetChart() {
 	}
 	myChart.update();
 	document.getElementById('myChart').style.display = 'none';
+	colorIdx = 1;
 }
 
+
 function processChart(index, position, colorIndex) {
+
 	let pos;
 	if (position == 'left') {
 		pos = 1;
@@ -127,9 +131,18 @@ function processChart(index, position, colorIndex) {
 	} else if (display == 'regression') {
 		let interpolatedArray = interpolate(dataSets.values[index]);
 		let regression = linearRegression(dataSets.values[0], interpolatedArray.values);
-		addChart(interpolatedArray.values, dataSets.names[index], position, colorIndex, interpolatedArray.colors);
+		//addChart(interpolatedArray.values, dataSets.names[index], position, colorIndex, interpolatedArray.colors);
 		addChart(regression.values, 'Regresión ' + dataSets.names[index], position, 5);
 		//console.log("y(t) = " + regression.slope + "t + " + regression.intersection);
+	} else if (display == 'movingAverage') {
+		colorIdx++;
+		if (colorIdx > colorArray.length) {
+			colorIdx = 1;
+		}
+		let samples = document.getElementById('averageSamples').value;
+		let interpolatedArray = interpolate(dataSets.values[index]);
+		let movingAverag = movingAverage(interpolatedArray.values, samples);
+		addChart(movingAverag, 'Moving average ' + samples, position, colorIdx);
 	}
 }
 
