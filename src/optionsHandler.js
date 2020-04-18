@@ -31,12 +31,16 @@ function dropdownChanged() {
 	generateBodyMetrics(0);
 }
 
-function selectTab(evt){
+function selectTab(evt, index) {
 	let tablinks = document.getElementsByClassName("tablinks");
 	for (i = 0; i < tablinks.length; i++) {
-	  tablinks[i].className = tablinks[i].className.replace(" active", "");
+		tablinks[i].className = tablinks[i].className.replace(" active", "");
 	}
 	evt.currentTarget.className += " active";
+	let dropdown = document.getElementById("chartList");
+	dropdown.selectedIndex = index;
+	dropdownChanged();
+
 }
 
 
