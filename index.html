@@ -109,9 +109,21 @@
 			</div>
 		</div>
 
-		
 		<div class="chart-container">
-			<canvas style="display:none" id="myChart" width="1000" height="700"></canvas>
+			<div class="tab">
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(1, 'left', 1)">Wheight</button>
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(2, 'left', 1)">Height</button>
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(3, 'left', 1)">BMI</button>
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(4, 'left', 1)">Fat</button>
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(5, 'left', 1)">Water</button>
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(6, 'left', 1)">Bone</button>
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(7, 'left', 1)">Metabolism</button>
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(8, 'left', 1)">Muscle</button>
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(9, 'left', 1)">Visceral fat</button>
+				<button class="tablinks" onclick="selectTab(event);resetChart();processChart(10, 'left', 1)">Impedance</button>
+				<canvas style="display:none" id="myChart" width="1200" height="700"></canvas>
+			</div>
+
 		</div>
 	</div>
 

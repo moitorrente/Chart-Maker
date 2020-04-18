@@ -4,7 +4,7 @@
   font-family: 'roboto';
   margin: 0;
   padding: 0;
-  background-color: rgb(241, 241, 241);
+  background-color: rgb(248, 248, 248);
  }
 
  .grid-container {
@@ -109,7 +109,7 @@
 
 .chart-container { 
   grid-area: chart-container; 
-  /* background: white; */
+  /*background: white;*/
   text-align: center;
 }
 
@@ -176,7 +176,7 @@ details{
 	border-style: solid;
 	border-color: #d3d3d3;
   padding: 1rem;
-	background-color: #ffffff;
+	background-color: rgb(255, 255, 255);
 	width: 35rem;
 	margin: 1rem;
 	transition: height 0.6s ease;
@@ -200,4 +200,43 @@ details summary::-webkit-details-marker {
 
 *:focus {
     outline: none;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.2s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  border-bottom: 3px solid rgba(255, 99, 132, 1);
+  position: relative;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  border-bottom: 3px solid rgba(54, 162, 235, 1);
+  position: relative;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
 }

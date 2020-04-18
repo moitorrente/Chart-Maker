@@ -17,7 +17,7 @@ function loadOptions() {
 	dropdown.selectedIndex = 1; //Se selecciona la siguiente posicion por defecto  
 	optionPanel.style.display = 'grid';
 	statisticsPanel.style.display = 'grid';
-	miniCharts.style.display = 'block';
+	miniCharts.style.display = 'inline-block';
 }
 
 document.getElementById("chartList").onchange = dropdownChanged;
@@ -29,6 +29,14 @@ function dropdownChanged() {
 	};
 	calculateStatistics(chartList.value);
 	generateBodyMetrics(0);
+}
+
+function selectTab(evt){
+	let tablinks = document.getElementsByClassName("tablinks");
+	for (i = 0; i < tablinks.length; i++) {
+	  tablinks[i].className = tablinks[i].className.replace(" active", "");
+	}
+	evt.currentTarget.className += " active";
 }
 
 
