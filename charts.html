@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Generador de graficas</title>
+	<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+	<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.4"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es-do.js"></script>
+	<link rel="stylesheet" type="text/css" href="charts-style.css">
+</head>
+
+<body>
+	<div class="grid-container">
+		<div class="header-container">
+			<h1>Generador de gráfica</h1>
+		</div>
+		<div class="file-container">
+			<p id="gender"></p>
+			<p id="age"></p>
+		</div>
+		<div id="optionPanel" class="options-container">
+
+			<div class="radiobuttons-container">
+				<h2>Opciones</h2>
+				<label for="">Dataset a tratar</label>
+				<select name="chart" id="chartList" class="list">Datos a mostrar</select>
+				<div>
+					<input type="radio" name="visualOptions" id="visualOptions" value="data" checked>Solo datos</input>
+				</div>
+				<div>
+					<input type="radio" name="visualOptions" id="visualOptions" value="interpolation">Datos
+					interpolados</input>
+				</div>
+				<div>
+					<input type="radio" name="visualOptions" id="visualOptions" value="regression">Regresión
+					lineal</input>
+				</div>
+				<div>
+					<input type="radio" name="visualOptions" id="visualOptions" value="movingAverage">Moving
+					average</input>
+					<input type="number" name="averageSamples" id="averageSamples" min=1 max=200 value=1></input>
+				</div>
+				<!-- <div>
+					<div>
+						<label>Fecha inicial</label>
+						<input type="date" name="initialDate" id="initialDate">
+					</div>
+					<div>
+						<label>Fecha final</label>
+						<input type="date" name="finalDate" id="finalDate">
+					</div>
+				</div> -->
+				<div class="button-center-wraper">
+					<input type="button" value="Añadir en eje izquierdo" id="rightChartButton"
+						onclick="processChart(chartList.value, 'left', 1)" class="button-right">
+					<input type="button" value="Añadir en eje derecho" id="leftChartButton"
+						onclick="processChart(chartList.value, 'right', 0)" class="button-left">
+				</div>
+				<div class="button-center-wraper">
+					<input type="button" value="Limpiar graficos" id="resetButton" onclick="resetChart()"
+						class="button-right">
+					<input type="button" value="Reset zoom" id="resetButton" onclick="myChart.resetZoom()"
+						class="button-left">
+				</div>
+			</div>
+		</div>
+		<div id="statisticsPanel" class="statistics-container">
+			<div class="parm1-container">
+				<input type="text" id="meanText" disabled>
+				<label>Media</label>
+			</div>
+			<div class="parm2-container">
+				<input type="text" id="medianText" disabled>
+				<label>Mediana</label>
+			</div>
+			<div class="parm3-container">
+				<input type="text" id="modeText" disabled>
+				<label>Moda</label>
+			</div>
+			<div class="parm4-container">
+				<input type="text" id="minText" disabled>
+				<label>Valor mínimo</label>
+			</div>
+			<div class="parm5-container">
+				<input type="text" id="maxText" disabled>
+				<label>Valor máximo</label>
+			</div>
+			<div class="parm6-container">
+				<input type="text" id="samplesText" disabled>
+				<label>Número de muestras</label>
+			</div>
+			<div class="parm7-container">
+				<input type="text" id="lossSamplesText" disabled>
+				<label>Número de muestras perdidas</label>
+			</div>
+			<div class="parm8-container">
+				<input type="text" id="rangeText" disabled>
+				<label>Rango</label>
+			</div>
+			<div class="statistics-btn-container">
+
+				<input type="button" value="Calcular estadísticas" onclick="calculateStatistics(chartList.value)"
+					class="button-center">
+			</div>
+		</div>
+
+		<div class="chart-container">
+			<div class="tab">
+				<button class="tablinks active"
+					onclick="selectTab(event, 1);resetChart();processChart(1, 'left', 1)">Wheight</button>
+				<button class="tablinks"
+					onclick="selectTab(event, 2);resetChart();processChart(2, 'left', 1)">Height</button>
+				<button class="tablinks"
+					onclick="selectTab(event, 3);resetChart();processChart(3, 'left', 1)">BMI</button>
+				<button class="tablinks"
+					onclick="selectTab(event, 4);resetChart();processChart(4, 'left', 1)">Fat</button>
+				<button class="tablinks"
+					onclick="selectTab(event, 5);resetChart();processChart(5, 'left', 1)">Water</button>
+				<button class="tablinks"
+					onclick="selectTab(event, 6);resetChart();processChart(6, 'left', 1)">Bone</button>
+				<button class="tablinks"
+					onclick="selectTab(event, 7);resetChart();processChart(7, 'left', 1)">Metabolism</button>
+				<button class="tablinks"
+					onclick="selectTab(event, 8);resetChart();processChart(8, 'left', 1)">Muscle</button>
+				<button class="tablinks" onclick="selectTab(event, 9);resetChart();processChart(9, 'left', 1)">Visceral
+					fat</button>
+				<button class="tablinks"
+					onclick="selectTab(event, 10);resetChart();processChart(10, 'left', 1)">Impedance</button>
+				<canvas id="myChart" width="1200" height="700"></canvas>
+			</div>
+
+		</div>
+	</div>
+
+	<div id="miniCharts" class="statistics-container">
+		<div class="chart-container">
+			<details>
+				<summary id="BMIChartSummary"></summary>
+				<canvas id="BMIChart" width="600" height="100" class="chart1D"></canvas>
+
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="MuscleChartSummary"></summary>
+				<canvas id="MuscleChart" width="600" height="100" class="chart1D"></canvas>
+
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="ProteinChartSummary"></summary>
+				<canvas id="ProteinChart" width="600" height="100" class="chart1D"></canvas>
+
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="BoneMassChartSummary"></summary>
+				<canvas id="BoneMassChart" width="600" height="100" class="chart1D"></canvas>
+
+		</div>
+
+		<div class="chart-container">
+			<details>
+				<summary id="WaterChartSummary"></summary>
+				<canvas id="WaterChart" width="600" height="100" class="chart1D"></canvas>
+
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="BMRChartSummary"></summary>
+				<canvas id="BMRChart" width="600" height="100" class="chart1D"></canvas>
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="FatChartSummary"></summary>
+				<canvas id="FatChart" width="600" height="100" class="chart1D"></canvas>
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="VisceralFatChartSummary"></summary>
+				<canvas id="VisceralFatChart" width="600" height="100" class="chart1D"></canvas>
+		</div>
+		<div class="chart-container">
+			<details>
+				<summary id="bodyTypeSummary"></summary>
+		</div>
+	</div>
+
+</body>
+<script src="dataProcessing.js"></script>
+<script src="optionsHandler.js"></script>
+<script src="statistics.js"></script>
+<script src="mainChart.js"></script>
+<script src="interpolation.js"></script>
+<script src="linearRegression.js"></script>
+<script src="movingAverage.js"></script>
+<script src="bodyMetrics.js"></script>
+<script src="Chart1D.js"></script>
+<script src="execution.js"></script>

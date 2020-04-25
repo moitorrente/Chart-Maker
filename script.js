@@ -1,175 +1,83 @@
-var header = [];
-var rawData = [];
-var timestamp = [];
-let colorIdx = 0;
+let file;
+let csv;
+const dropArea = document.getElementById('drop-area');
+dropArea.addEventListener('drop', handleDrop, false);
+//dropArea.addEventListener('change', handleDrop, false);
 
-var dataSets = {
-	names: [],
-	values: []
-}
-
-var colorArray = [
-	'rgba(255, 99, 132, 1)',
-	'rgba(54, 162, 235, 1)',
-	'rgba(255, 206, 86, 1)',
-	'rgba(75, 192, 192, 1)',
-	'rgba(153, 102, 255, 1)',
-	'rgba(255, 159, 64, 1)'];
-
-var ctx = document.getElementById('myChart').getContext('2d');
-
-var data = {
-	labels: [],
-	datasets: [],
-};
-
-var option = {
-	responsive: false,
-	pan: {
-		enabled: true,
-		mode: 'x',
-	},
-	zoom: {
-		enabled: true,
-		mode: 'x',
-		drag: false,
-	},
-	scales: {
-		xAxes: [{
-			type: 'time',
-			time: {
-				unit: 'day'
-			},
-			ticks: {
-				beginAtZero: false,
-			},
-			bounds: 'data',
-			distribution: 'linear',
-			//gridLines: { color: "#fff" },
-		}],
-		yAxes: [{
-			id: 'right',
-			position: 'right',
-			display: false,
-			scaleLabel: {
-				display: true,
-				labelString: ''
-			},
-			ticks: {
-				beginAtZero: false,
-			},
-			//gridLines: { color: "#fff" }
-		}, {
-			id: 'left',
-			position: 'left',
-			display: false,
-			scaleLabel: {
-				display: true,
-				labelString: ''
-			},
-			ticks: {
-				beginAtZero: false
-			},
-			//,gridLines: { color: "#fff" }
-		}
-		]
-	},
-	onClick: function (evt) {
-		let element = myChart.getElementAtEvent(evt);
-		if (element.length > 0) {
-			let index = element[0]._index;
-			generateBodyMetrics(index);
-		}
-	}
-};
-
-var myChart = new Chart(ctx, {
-	type: 'line',
-	data: data,
-	options: option
+['dragenter', 'dragover'].forEach(eventName => {
+    dropArea.addEventListener(eventName, highlight, false)
 });
-var bodyData;
 
-function resetChart() {
-	while (data.datasets.length) {
-		data.datasets.shift();
-	}
+['dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, unhighlight, false)
+});
 
-	for (let i = 0; i < myChart.options.scales.yAxes.length; i++) {
-		myChart.options.scales.yAxes[i].display = false;
-	}
-	myChart.update();
-	document.getElementById('myChart').style.display = 'none';
-	colorIdx = 0;
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, preventDefaults, false)
+});
+
+function handleFiles(files) {
+    if (window.FileReader) {
+        try {
+            console.log(files[0]);
+            file = files[0];
+            printFileProperties(file);
+            getAsText(file);
+        } catch (error) {
+            alert("Se ha producido un error, vuelve a seleccionar un archivo.");
+        }
+    } else {
+        alert('FileReader no funciona en este navegador');
+    }
 }
 
+function printFileProperties(file) {
+    document.getElementById('description').innerHTML = 'description';
 
-function processChart(index, position, colorIndex) {
-
-	let pos;
-	if (position == 'left') {
-		pos = 1;
-	} else {
-		pos = 0;
-	}
-	myChart.options.scales.yAxes[pos].display = true;
-
-	let visualOptions = document.getElementsByName('visualOptions');
-	let display = '';
-	for (let i = 0; i < visualOptions.length; i++) {
-		if (visualOptions[i].checked) {
-			display = (visualOptions[i].value);
-			break;
-		}
-	}
-	colorIdx++;
-	if (colorIdx > colorArray.length) {
-		colorIdx = 1;
-	}
-	if (display == 'data') {
-		addChart(dataSets.values[index], dataSets.names[index], position, colorIdx);
-	} else if (display == 'interpolation') {
-		let interpolatedArray = interpolate(dataSets.values[index]);
-		addChart(interpolatedArray.values, dataSets.names[index] +' interpolado', position, colorIdx, interpolatedArray.colors);
-	} else if (display == 'regression') {
-		let interpolatedArray = interpolate(dataSets.values[index]);
-		let regression = linearRegression(dataSets.values[0], interpolatedArray.values);
-		//addChart(interpolatedArray.values, dataSets.names[index], position, colorIndex, interpolatedArray.colors);
-		addChart(regression.values, 'Regresión ' + dataSets.names[index], position, 5);
-		//console.log("y(t) = " + regression.slope + "t + " + regression.intersection);
-	} else if (display == 'movingAverage') {
-
-		let samples = document.getElementById('averageSamples').value;
-		let interpolatedArray = interpolate(dataSets.values[index]);
-		let movingAverag = movingAverage(interpolatedArray.values, samples);
-		addChart(movingAverag, 'Moving average ' + samples, position, colorIdx);
-	}
+    let output = [];
+    output.push(escape(file.name));
+    document.getElementById('input').innerHTML = output;
 }
 
-function addChart(dataToDisplay, label, position, colorIndex, pointBackgroundColor) {
-	data.labels = timestamp;
-	let newDataset = generateChartDataset(dataToDisplay, label, position, colorIndex, pointBackgroundColor);
-	data.datasets.push(newDataset);
-	myChart.update();
-	document.getElementById('myChart').style.display = 'inline';
+function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
 }
 
-function generateChartDataset(dataArray, label, position, colorIndex, pointBackgroundColor) {
-	let index;
-	if (position == 'left') {
-		index = 1;
-	} else {
-		index = 0;
-	}
-	var newDataset = {
-		label: label,
-		lineTension: 0,  //Para quitar el interpolado
-		yAxisID: position,
-		data: dataArray,
-		borderColor: colorArray[colorIndex],
-		borderWidth: 1,
-		pointBackgroundColor: pointBackgroundColor,
-	}
-	myChart.options.scales.yAxes[index].scaleLabel.labelString = label;
-	return newDataset;
+function highlight(e) {
+    dropArea.classList.add('highlight');
+}
+
+function unhighlight(e) {
+    dropArea.classList.remove('highlight');
+}
+
+function handleDrop(e) {
+    const data = e.dataTransfer;
+    const files = data.files;
+    handleFiles(files);
+}
+
+function getAsText(fileToRead) {
+    var reader = new FileReader();
+    reader.readAsText(fileToRead);
+    reader.onload = loadHandler;
+    reader.onerror = errorHandler;
+}
+
+function loadHandler(event) {
+    csv = event.target.result;
+    const ageNumber = document.getElementById('age').value;
+    const genderValue = document.getElementById('gender').value;
+    localStorage.setItem('age', ageNumber);
+    localStorage.setItem('gender', genderValue);
+    localStorage.setItem('fileUploaded', csv);
+    dropArea.classList.add('uploaded');
+    document.getElementById('submit').disabled = false;
+}
+
+function errorHandler(evt) {
+    if (evt.target.error.name == "NotReadableError") {
+        alert("No se puede leer el fichero");
+    }
 }

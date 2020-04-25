@@ -403,7 +403,7 @@ class bodyMetrics {
 
 function generateBodyMetrics(index) {
     //todo better implementation of index
-    bodyData = new bodyMetrics('male', 27,
+        bodyData = new bodyMetrics(gender, age,
         dataSets.values[2][index], // height
         dataSets.values[1][index], // weight
         dataSets.values[10][index]/* impedance*/);
