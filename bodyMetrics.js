@@ -1,6 +1,8 @@
 //Based on: https://github.com/wiecosystem/Bluetooth/blob/master/sandbox/body_metrics.py
 //          https://github.com/oliexdev/openScale/blob/ecc8f2fd01db50456ec45b170d20e2aeb7323476/android_app/app/src/main/java/com/health/openscale/core/bluetooth/lib/MiScaleLib.java
 
+var bodyData;
+
 class bodyMetrics {
     constructor(sex, age, height, weight, impedance) {
         this.BMI = {};
@@ -102,7 +104,6 @@ class bodyMetrics {
         this.evaluateMetric(this.muscleMass);
         this.evaluateMetric(this.proteinRate);
         this.evaluateMetric(this.visceralFat);
-
     }
 
     evaluateMetric(obj) {
@@ -134,7 +135,7 @@ class bodyMetrics {
 
     //Body Mass Index
     getBMI(weight) {
-        let BMI = weight / (this.height / 100 * this.height / 100);
+        const BMI = weight / (this.height / 100 * this.height / 100);
         return this.roundDecimals(BMI);
     }
 
@@ -159,7 +160,7 @@ class bodyMetrics {
     }
 
     getBMRScale(weight) {
-        let scales = {
+        const scales = {
             'female': { 12: 34, 15: 29, 17: 24, 29: 22, 50: 20, 120: 19 },
             'male': { 12: 36, 15: 30, 17: 26, 29: 21.5, 50: 21, 120: 20 }
         }
@@ -172,9 +173,9 @@ class bodyMetrics {
 
     getBodyFat(weight, impedance) {
         let bodyFat = 0;
-        let LBMCoefficient = this.getLBM(weight, impedance);
-        let bfConstant = this.getBodyFatConstant();
-        let bfCoefficient = this.getBodyFatCoefficient(weight);
+        const LBMCoefficient = this.getLBM(weight, impedance);
+        const bfConstant = this.getBodyFatConstant();
+        const bfCoefficient = this.getBodyFatCoefficient(weight);
         bodyFat = (1.0 - (((LBMCoefficient - bfConstant) * bfCoefficient) / weight)) * 100;
         if (bodyFat > 63) {
             bodyFat = 75;
@@ -184,7 +185,7 @@ class bodyMetrics {
     }
 
     getBodyFatScale() {
-        let scales = [
+        const scales = [
             { 'min': 0, 'max': 20, 'female': [18, 23, 30, 35, 9999999], 'male': [8, 14, 21, 25, 9999999] },
             { 'min': 21, 'max': 25, 'female': [19, 24, 30, 35, 9999999], 'male': [10, 15, 22, 26, 9999999] },
             { 'min': 26, 'max': 30, 'female': [20, 25, 31, 36, 9999999], 'male': [11, 17, 22, 27, 9999999] },
@@ -273,7 +274,7 @@ class bodyMetrics {
 
 
     getBoneMassScale(weight) {
-        let scales = [
+        const scales = [
             { 'female': { 'min': 60, 'optimal': 2.5 }, 'male': { 'min': 75, 'optimal': 3.2 } },
             { 'female': { 'min': 45, 'optimal': 2.2 }, 'male': { 'min': 69, 'optimal': 2.9 } },
             { 'female': { 'min': 0, 'optimal': 1.8 }, 'male': { 'min': 0, 'optimal': 2.5 } }
@@ -297,7 +298,7 @@ class bodyMetrics {
     }
 
     getMuscleMassScale() {
-        let scales = [
+        const scales = [
             { 'min': 170, 'female': [36.5, 42.5, 9999999], 'male': [49.4, 59.5, 9999999] },
             { 'min': 160, 'female': [32.9, 37.5, 9999999], 'male': [44.0, 52.4, 9999999] },
             { 'min': 0, 'female': [29.1, 34.7, 9999999], 'male': [38.5, 46.5, 9999999] }
@@ -372,13 +373,13 @@ class bodyMetrics {
     }
 
     getBodyTypeScale(index) {
-        let scales = ['Obeso', 'Sobrepeso', 'Regordete', 'Te falta ejercicio', 'Equilibrado', 'Musculoso equilibrado', 'Delgado', 'Delgado equilibrado', 'Delgado musculoso'];
+        const scales = ['Obeso', 'Sobrepeso', 'Regordete', 'Te falta ejercicio', 'Equilibrado', 'Musculoso equilibrado', 'Delgado', 'Delgado equilibrado', 'Delgado musculoso'];
         // return ['obese', 'overweight', 'thick-set', 'lack-exerscise', 'balanced', 'balanced-muscular', 'skinny', 'balanced-skinny', 'skinny-muscular'];
         return scales[index];
     }
 
     getIdealWeight() {
-        let idealWeight = 22 * this.height * this.height / 10000;
+        const idealWeight = 22 * this.height * this.height / 10000;
         return this.roundDecimals(idealWeight);
     }
 
@@ -396,7 +397,7 @@ class bodyMetrics {
         if (!decimals) {
             decimals = 2;
         }
-        let roundedValue = parseFloat(value.toFixed(decimals));
+        const roundedValue = parseFloat(value.toFixed(decimals));
         return roundedValue;
     }
 }
@@ -409,35 +410,35 @@ function generateBodyMetrics(index) {
         dataSets.values[10][index]/* impedance*/);
 
     if (bodyData.BMI.value) {
-        let BMIText = 'IMC' + ' - ' + bodyData.BMI.value + ' - ' + bodyData.BMI.text;
+        const BMIText = 'IMC' + ' - ' + bodyData.BMI.value + ' - ' + bodyData.BMI.text;
         let BMIchart = new Chart1D('BMIChart', BMIText, bodyData.BMI.scale, bodyData.BMI.colorArray);
         BMIchart.show(bodyData.BMI.value, bodyData.BMI.text);
         document.getElementById('BMIChartSummary').style.color = bodyData.BMI.color;
     }
 
     if (bodyData.muscleMass.value) {
-        let MuscleText = 'Músculo' + ' - ' + bodyData.muscleMass.value + ' kg' + ' - ' + bodyData.muscleMass.text;
+        const MuscleText = 'Músculo' + ' - ' + bodyData.muscleMass.value + ' kg' + ' - ' + bodyData.muscleMass.text;
         let muscleChart = new Chart1D('MuscleChart', MuscleText, bodyData.muscleMass.scale, bodyData.muscleMass.colorArray);
         muscleChart.show(bodyData.muscleMass.value, bodyData.muscleMass.text);
         document.getElementById('MuscleChartSummary').style.color = bodyData.muscleMass.color;
     }
 
     if (bodyData.proteinRate.value) {
-        let ProteinText = 'Proteina' + ' - ' + bodyData.proteinRate.value + '%' + ' - ' + bodyData.proteinRate.text;
+        const ProteinText = 'Proteina' + ' - ' + bodyData.proteinRate.value + '%' + ' - ' + bodyData.proteinRate.text;
         let proteinChart = new Chart1D('ProteinChart', ProteinText, bodyData.proteinRate.scale, bodyData.proteinRate.colorArray);
         proteinChart.show(bodyData.proteinRate.value, bodyData.proteinRate.text);
         document.getElementById('ProteinChartSummary').style.color = bodyData.proteinRate.color;
     }
 
     if (bodyData.boneMass.value) {
-        let BoneMassText = 'Masa osea' + ' - ' + bodyData.boneMass.value + ' kg' + ' - ' + bodyData.boneMass.text;
+        const BoneMassText = 'Masa osea' + ' - ' + bodyData.boneMass.value + ' kg' + ' - ' + bodyData.boneMass.text;
         let BoneMassChart = new Chart1D('BoneMassChart', BoneMassText, bodyData.boneMass.scale, bodyData.boneMass.colorArray);
         BoneMassChart.show(bodyData.boneMass.value, bodyData.boneMass.text);
         document.getElementById('BoneMassChartSummary').style.color = bodyData.boneMass.color;
     }
 
     if (bodyData.waterRate.value) {
-        let WaterRateText = 'Agua' + ' - ' + bodyData.waterRate.value + '%' + ' - ' + bodyData.waterRate.text;
+        const WaterRateText = 'Agua' + ' - ' + bodyData.waterRate.value + '%' + ' - ' + bodyData.waterRate.text;
         let WaterRateChart = new Chart1D('WaterChart', WaterRateText, bodyData.waterRate.scale, bodyData.waterRate.colorArray);
         WaterRateChart.show(bodyData.waterRate.value, bodyData.waterRate.text);
         document.getElementById('WaterChartSummary').style.color = bodyData.waterRate.color;
@@ -445,14 +446,14 @@ function generateBodyMetrics(index) {
     }
 
     if (bodyData.BMR.value) {
-        let BMRText = 'Metabolismo basal' + ' - ' + bodyData.BMR.value + ' kcal' + ' - ' + bodyData.BMR.text;
+        const BMRText = 'Metabolismo basal' + ' - ' + bodyData.BMR.value + ' kcal' + ' - ' + bodyData.BMR.text;
         let BMRChart = new Chart1D('BMRChart', BMRText, bodyData.BMR.scale, bodyData.BMR.colorArray);
         BMRChart.show(bodyData.BMR.value, bodyData.BMR.text);
         document.getElementById('BMRChartSummary').style.color = bodyData.BMR.color;
     }
 
     if (bodyData.bodyFat.value) {
-        let bodyFatText = 'Grasa corporal' + ' - ' + bodyData.bodyFat.value + '%' + ' - ' + bodyData.bodyFat.text;
+        const bodyFatText = 'Grasa corporal' + ' - ' + bodyData.bodyFat.value + '%' + ' - ' + bodyData.bodyFat.text;
         let bodyFatChart = new Chart1D('FatChart', bodyFatText, bodyData.bodyFat.scale, bodyData.bodyFat.colorArray);
         bodyFatChart.show(bodyData.bodyFat.value, bodyData.bodyFat.text);
         document.getElementById('FatChartSummary').style.color = bodyData.bodyFat.color;
@@ -462,7 +463,7 @@ function generateBodyMetrics(index) {
     }
 
     if (bodyData.visceralFat.value) {
-        let visceralFatext = 'Grasa visceral' + ' - ' + bodyData.visceralFat.value + '%' + ' - ' + bodyData.visceralFat.text;
+        const visceralFatext = 'Grasa visceral' + ' - ' + bodyData.visceralFat.value + '%' + ' - ' + bodyData.visceralFat.text;
         let visceralFatChart = new Chart1D('VisceralFatChart', visceralFatext, bodyData.visceralFat.scale, bodyData.visceralFat.colorArray);
         visceralFatChart.show(bodyData.visceralFat.value, bodyData.visceralFat.text);
         document.getElementById('VisceralFatChartSummary').style.color = bodyData.visceralFat.color;

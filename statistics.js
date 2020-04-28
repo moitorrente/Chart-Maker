@@ -11,7 +11,7 @@ function mean(array) {
 
 function median(array) {
     let median = 0;
-    let numsLen = array.length;
+    const numsLen = array.length;
     let sortedArray = Array.from(array);
     sortedArray.sort();
 
@@ -48,18 +48,18 @@ function mode(array) {
 }
 
 function range(array) {
-    let sortedArray = Array.from(array);
+    const sortedArray = Array.from(array);
     sortedArray.sort();
-    let min = sortedArray[0];
-    let max = sortedArray[sortedArray.length - 1];
+    const min = sortedArray[0];
+    const max = sortedArray[sortedArray.length - 1];
     let range = max - min;
     range = range.toFixed(2);
     return [min, max, range];
 }
 
 function standardDeviation(array) {
-    let arrayMean = mean(array);
-    let samples = array.length;
+    const arrayMean = mean(array);
+    const samples = array.length;
     let sum = 0;
     let sDeviation = 0;
 
@@ -81,29 +81,29 @@ function lossSamplesNumber(array){
 }
 
 function calculateStatistics(index) {
-	let array = cleanArray(dataSets.values[index]);
-	let meanValue = mean(array);
-	let medianValue = median(array);
-	let modeValue = mode(array);
-	let rangeValues = range(array);
-	let samplesNumberValue = samplesNumber(array);
-	let lossSamplesValue = lossSamplesNumber(array);
+	const array = cleanArray(dataSets.values[index]);
+	const meanValue = mean(array);
+	const medianValue = median(array);
+	const modeValue = mode(array);
+	const rangeValues = range(array);
+	const samplesNumberValue = samplesNumber(array);
+	const lossSamplesValue = lossSamplesNumber(array);
 
-	let meanText = document.getElementById("meanText");
-	let medianText = document.getElementById("medianText");
-	let modeText = document.getElementById("modeText");
-	let minText = document.getElementById("minText");
-	let maxText = document.getElementById("maxText");
-	let samplesText = document.getElementById("samplesText");
-	let lossSamplesText = document.getElementById("lossSamplesText");
-	let rangeText = document.getElementById("rangeText");
+	const meanText = document.getElementById("meanText");
+	const medianText = document.getElementById("medianText");
+	const modeText = document.getElementById("modeText");
+	const minText = document.getElementById("minText");
+	const maxText = document.getElementById("maxText");
+	const samplesText = document.getElementById("samplesText");
+	const lossSamplesText = document.getElementById("lossSamplesText");
+	const rangeText = document.getElementById("rangeText");
 
-	meanText.value = meanValue;
-	medianText.value = medianValue;
-	modeText.value = modeValue;
-	minText.value = rangeValues[0];
-	maxText.value = rangeValues[1];
-	samplesText.value = samplesNumberValue;
-	lossSamplesText.value = lossSamplesValue;
-	rangeText.value = rangeValues[2];
+	meanText.innerHTML = new Intl.NumberFormat('de-DE').format(meanValue);
+	medianText.innerHTML = new Intl.NumberFormat('de-DE').format(medianValue);
+	modeText.innerHTML = new Intl.NumberFormat('de-DE').format(modeValue);
+	minText.innerHTML = new Intl.NumberFormat('de-DE').format(rangeValues[0]);
+	maxText.innerHTML = new Intl.NumberFormat('de-DE').format(rangeValues[1]);
+	samplesText.innerHTML = new Intl.NumberFormat('de-DE').format(samplesNumberValue);
+	lossSamplesText.innerHTML = new Intl.NumberFormat('de-DE').format(lossSamplesValue);
+	rangeText.innerHTML = new Intl.NumberFormat('de-DE').format(rangeValues[2]);
 }

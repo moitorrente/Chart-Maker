@@ -15,8 +15,8 @@ function loadOptions() {
 
 	dropdown.options[0].style.display = 'none';	//Se oculta el timestamp
 	dropdown.selectedIndex = 1; //Se selecciona la siguiente posicion por defecto  
-	optionPanel.style.display = 'grid';
-	statisticsPanel.style.display = 'grid';
+	optionPanel.style.display = 'flex';
+	statisticsPanel.style.display = 'flex';
 	miniCharts.style.display = 'inline-block';
 }
 
@@ -28,7 +28,7 @@ function dropdownChanged() {
 		processChart(chartList.value, 'left', 1);
 	};
 	calculateStatistics(chartList.value);
-	generateBodyMetrics(0);
+	generateBodyMetrics(dataSets.values[1].length-1);
 }
 
 function selectTab(evt, index) {
@@ -40,7 +40,8 @@ function selectTab(evt, index) {
 	let dropdown = document.getElementById("chartList");
 	dropdown.selectedIndex = index;
 	dropdownChanged();
-
+	resetChart();
+	processChart(index, 'left', 1);
 }
 
 

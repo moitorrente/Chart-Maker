@@ -30,8 +30,8 @@ function linearRegression(xArray, yArray) {
         xySum += x * y;
     }
 
-    let m = (samples * xySum - xSum * ySum) / (samples * xxSum - xSum * xSum);
-    let b = (ySum / samples) - (m * xSum) / samples;
+    const m = (samples * xySum - xSum * ySum) / (samples * xxSum - xSum * xSum);
+    const b = (ySum / samples) - (m * xSum) / samples;
 
     for (let i = 0; i < xArray.length; i++) {
         x = xArray[i];

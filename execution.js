@@ -2,8 +2,9 @@ const file = localStorage.getItem('fileUploaded');
 const age = localStorage.getItem('age');
 const gender = localStorage.getItem('gender');
 
-document.getElementById('gender').innerHTML = 'Gender: ' + gender;
-document.getElementById('age').innerHTML = 'Age: ' + age;
+//document.getElementById('gender').innerHTML = 'Gender: ' + gender;
+//document.getElementById('age').innerHTML = 'Age: ' + age;
+
 processCSV(file);
 localStorage.clear();
 

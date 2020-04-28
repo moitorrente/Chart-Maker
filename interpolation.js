@@ -1,8 +1,6 @@
-
-
 function interpolate(array) {
     let interpolatedArray = Array.from(array);
-    let noMeasureIndexes = searchNull(array);
+    const noMeasureIndexes = searchNull(array);
     let interpolatedColor = [];
 
     let interpolation = {
@@ -13,8 +11,8 @@ function interpolate(array) {
     interpolatedColor.length = 0;
 
     for (let i = 0; i < noMeasureIndexes.length; i++) {
-        let previousDataIndex = searchPrevious(array, noMeasureIndexes[i]);
-        let nextDataIndex = searchNext(array, noMeasureIndexes[i]);
+        const previousDataIndex = searchPrevious(array, noMeasureIndexes[i]);
+        const nextDataIndex = searchNext(array, noMeasureIndexes[i]);
         interpolatedArray[noMeasureIndexes[i]] = interpolatedValue(array, noMeasureIndexes[i], previousDataIndex, nextDataIndex,interpolatedColor);
     }
 
@@ -44,7 +42,6 @@ function searchNull(array) {
 }
 
 function searchPrevious(array, index) {
-
     for (let i = index; i >= 0; i--) {
         if (array[i] != null) {
             return i;
@@ -61,12 +58,12 @@ function searchNext(array, index) {
 }
 
 function interpolatedValue(array, index, previousIndex, nextIndex, interpolatedColor) {
-    let tempTimestamp = dataSets.values[0];
-    let firstPonderation = tempTimestamp[nextIndex] - tempTimestamp[index];
-    let secondPonderation = tempTimestamp[index] - tempTimestamp[previousIndex];
-    let divisor = tempTimestamp[nextIndex] - tempTimestamp[previousIndex];
-    let firstValue = parseFloat(array[previousIndex]);
-    let secondValue = parseFloat(array[nextIndex]);
+    const tempTimestamp = dataSets.values[0];
+    const firstPonderation = tempTimestamp[nextIndex] - tempTimestamp[index];
+    const secondPonderation = tempTimestamp[index] - tempTimestamp[previousIndex];
+    const divisor = tempTimestamp[nextIndex] - tempTimestamp[previousIndex];
+    const firstValue = parseFloat(array[previousIndex]);
+    const secondValue = parseFloat(array[nextIndex]);
     let interpolation = (firstValue * firstPonderation + secondValue * secondPonderation) / divisor;
     interpolation = parseFloat(interpolation.toFixed(2));
     interpolatedColor[index] = 'red';

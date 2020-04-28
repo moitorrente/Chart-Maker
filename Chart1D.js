@@ -123,7 +123,6 @@ class Chart1D {
             data: this.data,
             options: this.option
         });
-
     }
 
     setTitle(title){
@@ -134,10 +133,9 @@ class Chart1D {
         }
     }
 
-
     show(value, textValue) {
         let dataPosition, datasetPosition;
-        let colorArray = this.createColorScale(this.scaleColors);
+        const colorArray = this.createColorScale(this.scaleColors);
 
         this.translateScale();
         this.addScaleLabels(this.interpolateScale(this.scale));
@@ -168,13 +166,12 @@ class Chart1D {
         let colors = [];
         if (scaleColors) {
             for (let i in scaleColors) {
-
                 if (scaleColors[i][0] == '#') {
                     colors.push(scaleColors[i]);
                 } else {
                     colors.push(color[scaleColors[i]]);
                     if (!color[scaleColors[i]]) {
-                        console.log(`Color '${scaleColors[i]}' no válido!`);
+                        alert(`Color ${scaleColors[i]} no válido!`);
                     }
                 }
             }
@@ -183,7 +180,6 @@ class Chart1D {
         }
         return colors;
     }
-
 
     translateScale() {
         //En caso de que la escala no empiece en 0 lo inserta para desplazar hacia la derecha
@@ -200,7 +196,7 @@ class Chart1D {
     createScaleVectors(sections) {
         let newArray = [];
         let finalArray = [];
-        let tempSections = sections * 2 + 1;
+        const tempSections = sections * 2 + 1;
         let pos = 0;
 
         for (let j = 0; j < sections; j++) {
@@ -231,7 +227,7 @@ class Chart1D {
     }
 
     addScaleData(scale) {
-        let vect = this.createScaleVectors(scale.length - 1);
+        const vect = this.createScaleVectors(scale.length - 1);
         for (let i in this.data.datasets) {
             this.data.datasets[i].data = vect[i];
         }

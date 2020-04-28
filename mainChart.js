@@ -3,14 +3,12 @@ var rawData = [];
 var timestamp = [];
 let colorIdx = 0;
 
-
-
-var dataSets = {
+let dataSets = {
 	names: [],
 	values: []
 }
 
-var colorArray = [
+const colorArray = [
 	'rgba(255, 99, 132, 1)',
 	'rgba(54, 162, 235, 1)',
 	'rgba(255, 206, 86, 1)',
@@ -18,14 +16,14 @@ var colorArray = [
 	'rgba(153, 102, 255, 1)',
 	'rgba(255, 159, 64, 1)'];
 
-var ctx = document.getElementById('myChart').getContext('2d');
+const ctx = document.getElementById('myChart').getContext('2d');
 
-var data = {
+let data = {
 	labels: [],
 	datasets: [],
 };
 
-var option = {
+let option = {
 	responsive: true,
 	pan: {
 		enabled: true,
@@ -47,7 +45,6 @@ var option = {
 			},
 			bounds: 'data',
 			distribution: 'linear',
-			//gridLines: { color: "#fff" },
 		}],
 		yAxes: [{
 			id: 'right',
@@ -60,7 +57,6 @@ var option = {
 			ticks: {
 				beginAtZero: false,
 			},
-			//gridLines: { color: "#fff" }
 		}, {
 			id: 'left',
 			position: 'left',
@@ -72,7 +68,6 @@ var option = {
 			ticks: {
 				beginAtZero: false
 			},
-			//,gridLines: { color: "#fff" }
 		}
 		]
 	},
@@ -85,13 +80,11 @@ var option = {
 	}
 };
 
-var myChart = new Chart(ctx, {
+let myChart = new Chart(ctx, {
 	type: 'line',
 	data: data,
 	options: option
 });
-
-var bodyData;
 
 function resetChart() {
 	while (data.datasets.length) {
@@ -105,7 +98,6 @@ function resetChart() {
 	document.getElementById('myChart').style.display = 'none';
 	colorIdx = 0;
 }
-
 
 function processChart(index, position, colorIndex) {
 	let pos;
@@ -132,19 +124,25 @@ function processChart(index, position, colorIndex) {
 		addChart(dataSets.values[index], dataSets.names[index], position, colorIdx);
 	} else if (display == 'interpolation') {
 		let interpolatedArray = interpolate(dataSets.values[index]);
-		addChart(interpolatedArray.values, dataSets.names[index] +' interpolado', position, colorIdx, interpolatedArray.colors);
+		addChart(interpolatedArray.values, dataSets.names[index] + ' interpolado', position, colorIdx, interpolatedArray.colors);
 	} else if (display == 'regression') {
 		let interpolatedArray = interpolate(dataSets.values[index]);
 		let regression = linearRegression(dataSets.values[0], interpolatedArray.values);
 		//addChart(interpolatedArray.values, dataSets.names[index], position, colorIndex, interpolatedArray.colors);
 		addChart(regression.values, 'Regresión ' + dataSets.names[index], position, 5);
 		//console.log("y(t) = " + regression.slope + "t + " + regression.intersection);
-	} else if (display == 'movingAverage') {
+	} else if (display == 'centralMovingAverage') {
 
-		let samples = document.getElementById('averageSamples').value;
+		let samples = document.getElementById('centralAverageSamples').value;
 		let interpolatedArray = interpolate(dataSets.values[index]);
-		let movingAverag = movingAverage(interpolatedArray.values, samples);
-		addChart(movingAverag, 'Moving average ' + samples, position, colorIdx);
+		let movingAverag = centralMovingAverage(interpolatedArray.values, samples);
+		addChart(movingAverag, 'Central moving average ' + samples, position, colorIdx);
+	} else if (display == 'previousMovingAverage') {
+
+		let samples = document.getElementById('previousAverageSamples').value;
+		let interpolatedArray = interpolate(dataSets.values[index]);
+		let movingAverag = previousMovingAverage(interpolatedArray.values, samples);
+		addChart(movingAverag, 'Previous moving average ' + samples, position, colorIdx);
 	}
 }
 

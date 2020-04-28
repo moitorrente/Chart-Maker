@@ -1,5 +1,5 @@
 function processData(csv) {
-	var allTextLines = csv.split(/\r\n|\n/);
+	const allTextLines = csv.split(/\r\n|\n/);
 
 	header = allTextLines.shift().split(",");
 	while (allTextLines.length > 1) {

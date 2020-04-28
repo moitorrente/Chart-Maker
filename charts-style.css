@@ -5,146 +5,9 @@
   margin: 0;
   padding: 0;
   background-color: rgb(248, 248, 248);
-  height: 80%;
-  width: 90%;
+  height: 100%;
+  width: 80%;
  }
-
- .grid-container {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr 1fr 1fr;
-  grid-template-rows: 0.2fr 0.6fr 1fr 1.7fr;
-  grid-template-areas: "header-container header-container header-container header-container" "file-container chart-container chart-container chart-container" "options-container chart-container chart-container chart-container" "statistics-container chart-container chart-container chart-container";
-}
-
-.header-container { 
-  grid-area: header-container; 
-  text-align: center;
-}
-
-.file-container { 
-  grid-area: file-container; 
-  margin: 10px;
-  /* background: #1E1E1E; */
-}
-
-.options-container { 
-  display: block;
-  grid-area: options-container; 
-  margin: 10px;
-  /* background: #1E1E1E; */
-}
-
-
-.statistics-container {
-  display: block;
-  grid-template-columns: 0.9fr 1fr;
-  grid-template-rows: 1.5fr 1.5fr 1.5fr 1.5fr 1.5fr;
-  grid-template-areas: "parm1-container parm2-container" "parm3-container parm4-container" "parm5-container parm6-container" "parm7-container parm8-container" "statistics-btn-container statistics-btn-container";
-  grid-area: statistics-container;
-  text-align: center;
-  float: center;
-  margin: 10px;
-  /* background: #1E1E1E; */
-}
-
-.statistics-container input{
-  /* border: none; */
-  text-align: center;
-  width: 80px;
-  /* border-radius: 50px; */
-  /* background: none; */
-  font-weight: bold;
-  /* font-size: 20px; */
-}
-
-.statistics-container label{
-  text-align: center;
-  justify-content: center;
-  display: block;
-  font-size: 13px;
-}
-
-.statistics-btn-container { 
-  grid-area: statistics-btn-container; 
-  text-align: center;
-}
-
-.parm1-container { 
-  grid-area: parm1-container; 
-  padding: 15px;
-}
-
-.parm2-container { 
-  grid-area: parm2-container; 
-  padding: 15px;
-}
-
-.parm3-container { 
-  grid-area: parm3-container; 
-  padding: 15px;
-}
-
-.parm4-container { 
-  grid-area: parm4-container; 
-  padding: 15px;
-}
-
-.parm5-container { 
-  grid-area: parm5-container; 
-  padding: 15px;
-}
-
-.parm6-container { 
-  grid-area: parm6-container; 
-  padding: 15px;
-}
-
-.parm7-container { 
-  grid-area: parm7-container; 
-  padding: 15px;
-}
-
-.parm8-container { 
-  grid-area: parm8-container; 
-  padding: 15px;
-}
-
-.chart-container { 
-  grid-area: chart-container; 
-  /*background: white;*/
-  text-align: center;
-}
-
-
-input.button-right {
-  /* color: rgba(30, 22, 54, 0.6);
-  box-shadow: rgba(54, 162, 235, 1); */
-  border-radius: 3px;
-  width: max-content;
-  display: inline-block;
-}
-
-
-input.button-left {
-  /* color: rgba(30, 22, 54, 0.6);
-  box-shadow: rgba(255, 99, 132, 1); */
-  border-radius: 3px;
-  width: max-content;
-  display: inline-block;
-}
-
-input.button-center {
-  /* color: rgba(30, 22, 54, 0.6);
-  box-shadow: rgb(13, 43, 12);
-  border-radius: 3px; */
-  width: max-content;
-  display: inline-block;
-}
-
-
-.button-center-wraper {
-  text-align: center;
-}
 
 canvas{
 	margin-top: 1rem;
@@ -165,24 +28,25 @@ details{
 	border-style: solid;
 	border-color: #d3d3d3;
   padding: 1rem;
-	background-color: rgb(255, 255, 255);
-	width: 35rem;
-	margin: 1rem;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	width: 470px;
+	margin: 10px;
 	transition: height 0.6s ease;
   overflow: hidden;
 }
 
-details:not([open])
+.details-custom:not([open])
 {
-    height: 1.25em;
+    height: 60px;
 }
 
-details[open]
+.details-custom[open]
 {
-    height: 120px;
+    height: 160px;
 }
 
-details summary::-webkit-details-marker {
+.details-custom summary::-webkit-details-marker {
 	position: relative;
 	left: 90%;
 }
@@ -194,6 +58,7 @@ details summary::-webkit-details-marker {
 /* Style the tab */
 .tab {
   overflow: hidden;
+
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #ffffff;
@@ -201,6 +66,7 @@ details summary::-webkit-details-marker {
 
 /* Style the buttons that are used to open the tab content */
 .tab button {
+  width: fit-content;
   background-color: inherit;
   float: left;
   border: none;
@@ -229,4 +95,44 @@ details summary::-webkit-details-marker {
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+}
+
+
+/*Estadísticas*/
+.statistics-container{
+  /*background-color: white;*/
+  text-align: center;
+  width: 100%;
+  border-radius: 8px;
+  margin: 2px;
+}
+
+.card-wraper{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  height: fit-content;
+
+}
+
+.card-custom {
+  width: 90px;
+  height: 70px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  text-align: center;
+  background-color: #f1f1f1;
+  margin: 12px;
+
+}
+
+h3, p{
+  font-size: 15px;
+
+}
+
+h3{
+  font-weight: bold;
 }

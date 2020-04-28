@@ -19,7 +19,6 @@ dropArea.addEventListener('drop', handleDrop, false);
 function handleFiles(files) {
     if (window.FileReader) {
         try {
-            console.log(files[0]);
             file = files[0];
             printFileProperties(file);
             getAsText(file);
