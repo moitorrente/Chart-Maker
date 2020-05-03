@@ -1,7 +1,15 @@
 function processData(csv) {
+	let data = {
+		header: [],
+		values: []
+	}
+
+	let rawData = [];
+
 	const allTextLines = csv.split(/\r\n|\n/);
 
 	header = allTextLines.shift().split(",");
+	data.header = header;
 	while (allTextLines.length > 1) {
 		rawData.push(allTextLines.shift().split(","));
 	}
@@ -12,11 +20,17 @@ function processData(csv) {
 		timestamp[i] = convertUnixTimestamp(timestamp[i]);
 	}
 
-	dataSets.names = header;
-	dataSets.values[0] = extractValue2dArray(rawData, 0);
+	//dataSets.names = header;
+	data.values[0] = extractValue2dArray(rawData, 0);
+
 	for (let i = 1; i < header.length; i++) {
-		dataSets.values.push(extractValue2dArray(rawData, i));
+		//dataSets.values.push(extractValue2dArray(rawData, i));
+		data.values.push(extractValue2dArray(rawData, i));
 	}
+
+	data.values[0] = timestamp;
+
+	return data;
 }
 
 function extractValue2dArray(array, index) {

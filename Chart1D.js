@@ -80,7 +80,7 @@ class Chart1D {
                 }]
         }
         this.option = {
-            responsive: true,
+            responsive: false,
             legend: {
                 display: false,
                 position: 'bottom'

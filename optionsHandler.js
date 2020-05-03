@@ -2,7 +2,7 @@ function loadOptions() {
 	let optionPanel = document.getElementById("optionPanel");
 	let dropdown = document.getElementById("chartList");
 	let statisticsPanel = document.getElementById("statisticsPanel");
-	let miniCharts = document.getElementById("miniCharts");
+	//let miniCharts = document.getElementById("miniCharts");
 
 	//	dropdown.options.length = 0;
 
@@ -17,7 +17,7 @@ function loadOptions() {
 	dropdown.selectedIndex = 1; //Se selecciona la siguiente posicion por defecto  
 	optionPanel.style.display = 'flex';
 	statisticsPanel.style.display = 'flex';
-	miniCharts.style.display = 'inline-block';
+	//miniCharts.style.display = 'inline-block';
 }
 
 document.getElementById("chartList").onchange = dropdownChanged;

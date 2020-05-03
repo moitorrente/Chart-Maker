@@ -5,13 +5,16 @@
 	<meta charset="UTF-8">
 	<title>Generador de graficas</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
 	<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.4"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es-do.js"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="charts-style.css">
 
@@ -21,22 +24,38 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-12">
-				<div class="page-header">
-					<h1>Generador de gráfica</h1>
-				</div>
+			<div class="col-md-12 fixed-top">
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+					<a class="navbar-brand" href="#">Analizador datos Mi</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item active ml-3">
+								<button type="button" class="btn btn-outline-light" onclick="window.location.href = 'index.html'">Cargar fichero</button>
+							</li>
+							<li class="nav-item active ml-3">
+								<button type="button" class="btn btn-outline-light" onclick="window.location.href = 'data.html'">Ver datos</button>
+							</li>
+						</ul>
+					</div>
+				</nav>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-2">
+			<div class="col-md-2 left-menu">
 				<div id="optionPanel" class="options-container">
-
-					<div class="radiobuttons-container">
+					<div class="radiobuttons-container sticky-top">
 						<h2>Opciones</h2>
 						<label for="">Dataset a tratar</label>
 						<select name="chart" id="chartList" class="list">Datos a mostrar</select>
 						<div>
-							<input type="radio" name="visualOptions" id="visualOptions" value="data" checked>Solo datos</input>
+							<input type="radio" name="visualOptions" id="visualOptions" value="data" checked>Solo
+							datos</input>
 						</div>
 						<div>
 							<input type="radio" name="visualOptions" id="visualOptions" value="interpolation">Datos
@@ -47,33 +66,26 @@
 							lineal</input>
 						</div>
 						<div>
-							<input type="radio" name="visualOptions" id="visualOptions" value="centralMovingAverage">Central
+							<input type="radio" name="visualOptions" id="visualOptions"
+								value="centralMovingAverage">Central
 							moving
 							average</input>
-							<input type="number" name="averageSamples" id="centralAverageSamples" min=1 max=200 value=1></input>
+							<input type="number" name="averageSamples" id="centralAverageSamples" min=1 max=200
+								value=1></input>
 						</div>
 						<div>
-							<input type="radio" name="visualOptions" id="visualOptions" value="previousMovingAverage">Previous
+							<input type="radio" name="visualOptions" id="visualOptions"
+								value="previousMovingAverage">Previous
 							moving
 							average</input>
 							<input type="number" name="averageSamples" id="previousAverageSamples" min=1 max=200
 								value=1></input>
 						</div>
-						<!-- <div>
-							<div>
-								<label>Fecha inicial</label>
-								<input type="date" name="initialDate" id="initialDate">
-							</div>
-							<div>
-								<label>Fecha final</label>
-								<input type="date" name="finalDate" id="finalDate">
-							</div>
-						</div> -->
 						<div class="button-center-wraper">
 							<input type="button" value="Añadir en eje izquierdo" id="rightChartButton"
-								onclick="processChart(chartList.value, 'left', 1)" class="button-right">
+								onclick="processChart(chartList.value, 'left', 1)" class="btn-default">
 							<input type="button" value="Añadir en eje derecho" id="leftChartButton"
-								onclick="processChart(chartList.value, 'right', 0)" class="button-left">
+								onclick="processChart(chartList.value, 'right', 0)" class="btn">
 						</div>
 						<div class="button-center-wraper">
 							<input type="button" value="Limpiar graficos" id="resetButton" onclick="resetChart()"
@@ -85,41 +97,71 @@
 				</div>
 			</div>
 			<div class="col-md-8">
-				<div class="row">
-					<div class="col-md-12">
-						<div id="statisticsPanel" class="statistics-container">
-							<div class="card-wraper">
-								<div class="card-custom">
-									<h3 id="meanText">Card 1</h3>
-									<p>Media</p>
+				<div class="col-md-12">
+					<div id="statisticsPanel" class="row row-cols-8">
+						<div class="row card-wraper">
+							<div class="col">
+								<div class="card">
+									<div class="card-header">Media</div>
+									<div class="card-body">
+										<p id="meanText">1234</p>
+									</div>
 								</div>
-								<div class="card-custom">
-									<h3 id="medianText"> Card 2</h3>
-										<p>Mediana</p>
+							</div>
+							<div class="col mb-4">
+								<div class="card">
+									<div class="card-header">Mediana</div>
+									<div class="card-body">
+										<p id="medianText">Mediana</p>
+									</div>
 								</div>
-								<div class="card-custom">
-									<h3 id="modeText">Card 3</h3>
-									<p>Moda</p>
+							</div>
+							<div class="col mb-4">
+								<div class="card">
+									<div class="card-header">Moda</div>
+									<div class="card-body">
+										<p id="modeText">Moda</p>
+									</div>
 								</div>
-								<div class="card-custom">
-									<h3 id="minText">Card 4</h3>
-									<p>Mínimo</p>
+							</div>
+							<div class="col mb-4">
+								<div class="card">
+									<div class="card-header">Mínimo</div>
+									<div class="card-body">
+										<p id="minText">Minimo</p>
+									</div>
 								</div>
-								<div class="card-custom">
-									<h3 id="maxText">Card 4</h3>
-									<p>Máximo</p>
+							</div>
+							<div class="col mb-4">
+								<div class="card">
+									<div class="card-header">Máximo</div>
+									<div class="card-body">
+										<p id="maxText">Máximo</p>
+									</div>
 								</div>
-								<div class="card-custom">
-									<h3 id="samplesText">Card 4</h3>
-									<p>Muestras</p>
+							</div>
+							<div class="col mb-4">
+								<div class="card">
+									<div class="card-header">Muestras</div>
+									<div class="card-body">
+										<p id="samplesText">Muestras</p>
+									</div>
 								</div>
-								<div class="card-custom">
-									<h3 id="lossSamplesText">Card 4</h3>
-									<p>Perdidas</p>
+							</div>
+							<div class="col mb-4">
+								<div class="card">
+									<div class="card-header">Perdidas</div>
+									<div class="card-body">
+										<p id="lossSamplesText">Perdidas</p>
+									</div>
 								</div>
-								<div class="card-custom">
-									<h3 id="rangeText">Card 4</h3>
-									<p>Rango</p>
+							</div>
+							<div class="col mb-4">
+								<div class="card">
+									<div class="card-header">Rango</div>
+									<div class="card-body">
+										<p id="rangeText">Rango</p>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -140,61 +182,175 @@
 						<button class="tablinks" onclick="selectTab(event, 10)">Impedance</button>
 						<canvas id="myChart" width="1200" height="700"></canvas>
 					</div>
-		
+
 				</div>
 			</div>
 			<div class="col-md-2">
-				<div id="miniCharts" class="statistics-container">
-					<div class="chart-container">
-						<details class="details-custom">
-							<summary id="BMIChartSummary"></summary>
-							<canvas id="BMIChart" width="600" height="100" class="chart1D"></canvas>
-			
+				<div class="row">
+					<div class="row card-wraper">
+						<div class="col">
+							<div class="card">
+								<div class="card-header">Edad</div>
+								<div class="card-body">
+									<p id="meanText">27</p>
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="card">
+								<div class="card-header">Sexo</div>
+								<div class="card-body">
+									<p id="meanText">Hombre</p>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="chart-container">
-						<details class="details-custom">
-							<summary id="MuscleChartSummary"></summary>
-							<canvas id="MuscleChart" width="600" height="100" class="chart1D"></canvas>
-			
+
+
+					<!--Accordion wrapper-->
+					<div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+						<div class="card card-chart">
+							<div class="card-header" role="tab" id="headingOne1">
+								<a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1"
+									aria-expanded="false" aria-controls="collapseOne1">
+									<span>
+										<i class="material-icons" id="BMIChartIcon">fiber_manual_record</i>
+										<h5 id="BMIChartSummary" class="mb-0"></h5>
+									</span>
+
+								</a>
+							</div>
+							<div id="collapseOne1" class="collapse" role="tabpanel" aria-labelledby="headingOne1"
+								data-parent="#accordionEx">
+								<div class="card-body">
+									<canvas id="BMIChart" width="450" height="100" class="chart1D"></canvas>
+								</div>
+							</div>
+						</div>
+						<div class="card card-chart">
+							<div class="card-header" role="tab" id="headingOne2">
+								<a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne2"
+									aria-expanded="false" aria-controls="collapseOne2">
+									<i class="material-icons" id="MuscleChartIcon">fiber_manual_record</i>
+
+									<h5 id="MuscleChartSummary" class="mb-0"></h5>
+								</a>
+							</div>
+							<div id="collapseOne2" class="collapse" role="tabpanel" aria-labelledby="headingOne2"
+								data-parent="#accordionEx">
+								<div class="card-body">
+									<canvas id="MuscleChart" width="450" height="100" class="chart1D"></canvas>
+								</div>
+							</div>
+						</div>
+						<div class="card card-chart">
+							<div class="card-header" role="tab" id="headingOne3">
+								<a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne3"
+									aria-expanded="false" aria-controls="collapseOne3">
+									<i class="material-icons" id="ProteinChartIcon">fiber_manual_record</i>
+
+									<h5 id="ProteinChartSummary" class="mb-0"></h5>
+								</a>
+							</div>
+							<div id="collapseOne3" class="collapse" role="tabpanel" aria-labelledby="headingOne3"
+								data-parent="#accordionEx">
+								<div class="card-body">
+									<canvas id="ProteinChart" width="450" height="100" class="chart1D"></canvas>
+								</div>
+							</div>
+						</div>
+						<div class="card card-chart">
+							<div class="card-header" role="tab" id="headingOne4">
+								<a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne4"
+									aria-expanded="false" aria-controls="collapseOne4">
+									<i class="material-icons" id="BoneMassChartIcon">fiber_manual_record</i>
+
+									<h5 id="BoneMassChartSummary" class="mb-0"></h5>
+								</a>
+							</div>
+							<div id="collapseOne4" class="collapse" role="tabpanel" aria-labelledby="headingOne4"
+								data-parent="#accordionEx">
+								<div class="card-body">
+									<canvas id="BoneMassChart" width="450" height="100" class="chart1D"></canvas>
+								</div>
+							</div>
+						</div>
+						<div class="card card-chart">
+							<div class="card-header" role="tab" id="headingOne5">
+								<a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne5"
+									aria-expanded="false" aria-controls="collapseOne5">
+									<i class="material-icons" id="WaterChartIcon">fiber_manual_record</i>
+
+									<h5 id="WaterChartSummary" class="mb-0"></h5>
+								</a>
+							</div>
+							<div id="collapseOne5" class="collapse" role="tabpanel" aria-labelledby="headingOne5"
+								data-parent="#accordionEx">
+								<div class="card-body">
+									<canvas id="WaterChart" width="450" height="100" class="chart1D"></canvas>
+								</div>
+							</div>
+						</div>
+						<div class="card card-chart">
+							<div class="card-header" role="tab" id="headingOne6">
+								<a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne6"
+									aria-expanded="false" aria-controls="collapseOne6">
+									<i class="material-icons" id="BMRChartIcon">fiber_manual_record</i>
+									<h5 id="BMRChartSummary" class="mb-0"></h5>
+								</a>
+							</div>
+							<div id="collapseOne6" class="collapse" role="tabpanel" aria-labelledby="headingOne6"
+								data-parent="#accordionEx">
+								<div class="card-body">
+									<canvas id="BMRChart" width="450" height="100" class="chart1D"></canvas>
+								</div>
+							</div>
+						</div>
+						<div class="card card-chart">
+							<div class="card-header" role="tab" id="headingOne7">
+								<a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne7"
+									aria-expanded="false" aria-controls="collapseOne7">
+									<i class="material-icons" id="FatChartIcon">fiber_manual_record</i>
+
+									<h5 id="FatChartSummary" class="mb-0"></h5>
+								</a>
+							</div>
+							<div id="collapseOne7" class="collapse" role="tabpanel" aria-labelledby="headingOne7"
+								data-parent="#accordionEx">
+								<div class="card-body">
+									<canvas id="FatChart" width="450" height="100" class="chart1D"></canvas>
+								</div>
+							</div>
+						</div>
+						<div class="card card-chart">
+							<div class="card-header" role="tab" id="headingOne8">
+								<a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne8"
+									aria-expanded="false" aria-controls="collapseOne8">
+									<i class="material-icons" id="VisceralFatChartIcon">fiber_manual_record</i>
+
+									<h5 id="VisceralFatChartSummary" class="mb-0"></h5>
+								</a>
+							</div>
+							<div id="collapseOne8" class="collapse" role="tabpanel" aria-labelledby="headingOne8"
+								data-parent="#accordionEx">
+								<div class="card-body">
+									<canvas id="VisceralFatChart" width="450" height="100" class="chart1D"></canvas>
+								</div>
+							</div>
+						</div>
+						<div class="card card-chart">
+							<div class="card-header" role="tab" id="headingOne9">
+								<a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne9"
+									aria-expanded="false" aria-controls="collapseOne9">
+									<i class="material-icons" id="bodyTypeIcon">fiber_manual_record</i>
+									<h5 id="bodyTypeSummary" class="mb-0"></h5>
+								</a>
+							</div>
+						</div>
+
 					</div>
-					<div class="chart-container">
-						<details class="details-custom">
-							<summary id="ProteinChartSummary"></summary>
-							<canvas id="ProteinChart" width="600" height="100" class="chart1D"></canvas>
-			
-					</div>
-					<div class="chart-container">
-						<details class="details-custom">
-							<summary id="BoneMassChartSummary"></summary>
-							<canvas id="BoneMassChart" width="600" height="100" class="chart1D"></canvas>
-			
-					</div>
-			
-					<div class="chart-container">
-						<details class="details-custom">
-							<summary id="WaterChartSummary"></summary>
-							<canvas id="WaterChart" width="600" height="100" class="chart1D"></canvas>
-			
-					</div>
-					<div class="chart-container">
-						<details class="details-custom">
-							<summary id="BMRChartSummary"></summary>
-							<canvas id="BMRChart" width="600" height="100" class="chart1D"></canvas>
-					</div>
-					<div class="chart-container">
-						<details class="details-custom">
-							<summary id="FatChartSummary"></summary>
-							<canvas id="FatChart" width="600" height="100" class="chart1D"></canvas>
-					</div>
-					<div class="chart-container">
-						<details class="details-custom">
-							<summary id="VisceralFatChartSummary"></summary>
-							<canvas id="VisceralFatChart" width="600" height="100" class="chart1D"></canvas>
-					</div>
-					<div class="chart-container">
-						<details class="details-custom">
-							<summary id="bodyTypeSummary"></summary>
-					</div>
+					<!-- Accordion wrapper -->
+
 				</div>
 			</div>
 		</div>

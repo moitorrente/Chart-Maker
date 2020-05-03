@@ -1,5 +1,4 @@
-var header = [];
-var rawData = [];
+
 var timestamp = [];
 let colorIdx = 0;
 

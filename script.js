@@ -1,3 +1,5 @@
+localStorage.clear();
+
 let file;
 let csv;
 const dropArea = document.getElementById('drop-area');

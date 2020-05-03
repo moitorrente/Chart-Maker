@@ -6,10 +6,14 @@ const gender = localStorage.getItem('gender');
 //document.getElementById('age').innerHTML = 'Age: ' + age;
 
 processCSV(file);
-localStorage.clear();
+//localStorage.clear();
 
 function processCSV(csv){
-    processData(csv);
+    const data=processData(csv);
+
+    dataSets.name = data.header;
+    dataSets.values = data.values;
+
     loadOptions();
 
     processChart(chartList.value, 'left', 1);
