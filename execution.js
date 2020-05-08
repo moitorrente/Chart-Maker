@@ -1,9 +1,11 @@
 const file = localStorage.getItem('fileUploaded');
 const age = localStorage.getItem('age');
 const gender = localStorage.getItem('gender');
+const ageText = document.getElementById('ageText');
+ageText.innerHTML = age;
 
-//document.getElementById('gender').innerHTML = 'Gender: ' + gender;
-//document.getElementById('age').innerHTML = 'Age: ' + age;
+const genderText = document.getElementById('genderText');
+genderText.innerHTML = gender;
 
 processCSV(file);
 //localStorage.clear();
@@ -13,6 +15,7 @@ function processCSV(csv){
 
     dataSets.name = data.header;
     dataSets.values = data.values;
+
 
     loadOptions();
 

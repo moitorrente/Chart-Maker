@@ -20,11 +20,7 @@ function processData(csv) {
 		timestamp[i] = convertUnixTimestamp(timestamp[i]);
 	}
 
-	//dataSets.names = header;
-	data.values[0] = extractValue2dArray(rawData, 0);
-
-	for (let i = 1; i < header.length; i++) {
-		//dataSets.values.push(extractValue2dArray(rawData, i));
+	for (let i = 0; i < header.length; i++) {
 		data.values.push(extractValue2dArray(rawData, i));
 	}
 
@@ -45,16 +41,24 @@ function extractValue2dArray(array, index) {
 	return dataArray;
 }
 
+function extractValue2dArrayText(array, index) {
+	let dataArray = [];
+	for (let i = 0; i < array.length; i++) {
+		dataArray[i] = array[i][index];
+	}
+	return dataArray;
+}
+
 function convertUnixTimestamp(unixTimestamp) {
 	return moment.unix(unixTimestamp).format();
 }
 
 function cleanArray(array) {
-    let cleanArray = [];
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] != null) {
-            cleanArray.push(parseFloat(array[i]));
-        }
-    }
-    return cleanArray;
+	let cleanArray = [];
+	for (let i = 0; i < array.length; i++) {
+		if (array[i] != null) {
+			cleanArray.push(parseFloat(array[i]));
+		}
+	}
+	return cleanArray;
 }

@@ -1,8 +1,6 @@
-
-
 const file = localStorage.getItem('fileUploaded');
 const data = processData(file);
-console.log(data);
+
 
 const table = document.getElementById('table');
 
